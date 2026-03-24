@@ -1,1229 +1,2961 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Project HorsePillow</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-/* ── RESET ── */
-*{box-sizing:border-box;margin:0;padding:0}
-html{font-size:17px}
-body{
-  font-family:'Barlow',sans-serif;
-  background:#F5F0E8;
-  color:#2A2218;
-  min-height:100vh;
-  line-height:1.5;
-}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project HorsePillow</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 17px;
+      }
+      body {
+        font-family: "Barlow", sans-serif;
+        background: #f5f0e8;
+        color: #2a2218;
+        min-height: 100vh;
+        line-height: 1.5;
+      }
 
-/* ── DESIGN TOKENS ── */
-:root{
-  --cream:#F5F0E8;
-  --cream2:#EDE7DA;
-  --cream3:#E3DAC9;
-  --warm-white:#FAF7F2;
-  --text:#2A2218;
-  --text-sec:#6B5F4E;
-  --text-dim:#9A8E7E;
-  --amber:#C8720A;
-  --amber-light:#E8921A;
-  --amber-pale:rgba(200,114,10,0.10);
-  --amber-border:rgba(200,114,10,0.22);
-  --terracotta:#B85A3A;
-  --terra-pale:rgba(184,90,58,0.10);
-  --green:#4A7A4A;
-  --green-pale:rgba(74,122,74,0.10);
-  --blue:#3A5A8A;
-  --blue-pale:rgba(58,90,138,0.10);
-  --border:rgba(42,34,24,0.10);
-  --border-warm:rgba(42,34,24,0.16);
-  --shadow:0 2px 12px rgba(42,34,24,0.08);
-  --shadow-md:0 4px 24px rgba(42,34,24,0.12);
-  --radius:10px;
-  --font-ui:'Barlow Condensed',sans-serif;
-}
+      :root {
+        --cream: #f5f0e8;
+        --cream2: #ede7da;
+        --cream3: #e3dac9;
+        --warm-white: #faf7f2;
+        --text: #2a2218;
+        --text-sec: #6b5f4e;
+        --text-dim: #9a8e7e;
+        --amber: #c8720a;
+        --amber-light: #e8921a;
+        --amber-pale: rgba(200, 114, 10, 0.1);
+        --amber-border: rgba(200, 114, 10, 0.22);
+        --terracotta: #b85a3a;
+        --terra-pale: rgba(184, 90, 58, 0.1);
+        --green: #4a7a4a;
+        --green-pale: rgba(74, 122, 74, 0.1);
+        --blue: #3a5a8a;
+        --blue-pale: rgba(58, 90, 138, 0.1);
+        --purple: #6a4a8a;
+        --purple-pale: rgba(106, 74, 138, 0.1);
+        --border: rgba(42, 34, 24, 0.1);
+        --border-warm: rgba(42, 34, 24, 0.16);
+        --shadow: 0 2px 12px rgba(42, 34, 24, 0.08);
+        --shadow-md: 0 4px 24px rgba(42, 34, 24, 0.12);
+        --radius: 10px;
+        --font-ui: "Barlow Condensed", sans-serif;
+      }
 
-/* ── LAYOUT ── */
-.app{display:flex;min-height:100vh}
+      .app {
+        display: flex;
+        min-height: 100vh;
+      }
 
-/* ── SIDEBAR ── */
-.sidebar{
-  width:220px;flex-shrink:0;
-  background:var(--warm-white);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;
-  overflow-y:auto;
-}
-.sb-head{
-  padding:24px 20px 20px;
-  border-bottom:1px solid var(--border);
-  text-align:center;
-}
-.sb-mascot{
-  width:64px;height:64px;border-radius:50%;
-  background:var(--amber-pale);
-  border:2px solid var(--amber-border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;margin:0 auto 12px;
-  box-shadow:0 0 0 4px rgba(200,114,10,0.06);
-}
-.sb-name{
-  font-family:var(--font-ui);font-size:20px;font-weight:800;
-  color:var(--text);letter-spacing:0.08em;text-transform:uppercase;
-}
-.sb-role{
-  font-family:var(--font-ui);font-size:10px;font-weight:600;
-  color:var(--amber);letter-spacing:0.18em;text-transform:uppercase;
-  margin-top:2px;opacity:0.8;
-}
-.sb-clock{
-  font-family:var(--font-ui);font-size:22px;font-weight:300;
-  color:var(--text);margin-top:10px;letter-spacing:0.06em;
-}
-.sb-date{
-  font-family:var(--font-ui);font-size:10px;font-weight:600;
-  color:var(--text-dim);letter-spacing:0.12em;text-transform:uppercase;
-  margin-top:2px;
-}
+      /* ── SIDEBAR ── */
+      .sidebar {
+        width: 240px;
+        flex-shrink: 0;
+        background: var(--warm-white);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+      .sb-head {
+        padding: 20px 18px 16px;
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+      }
+      .sb-mascot {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--amber-pale);
+        border: 2px solid var(--amber-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin: 0 auto 10px;
+        box-shadow: 0 0 0 4px rgba(200, 114, 10, 0.06);
+      }
+      .sb-name {
+        font-family: var(--font-ui);
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--text);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .sb-role {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--amber);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-top: 2px;
+        opacity: 0.8;
+      }
+      .sb-clock {
+        font-family: var(--font-ui);
+        font-size: 22px;
+        font-weight: 300;
+        color: var(--text);
+        margin-top: 8px;
+        letter-spacing: 0.06em;
+      }
+      .sb-date {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-dim);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
 
-/* Nav */
-.sb-nav{padding:12px 10px;flex:1}
-.ni{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 12px;border-radius:7px;
-  font-family:var(--font-ui);font-size:14px;font-weight:600;
-  letter-spacing:0.07em;text-transform:uppercase;
-  color:var(--text-sec);cursor:pointer;
-  transition:all 0.18s;border:1px solid transparent;
-  text-decoration:none;margin-bottom:2px;
-}
-.ni:hover{background:var(--amber-pale);color:var(--amber);border-color:var(--amber-border);transform:translateX(3px)}
-.ni.on{background:var(--amber-pale);color:var(--amber);border-color:var(--amber-border)}
-.ni.on::before{content:'';position:absolute;left:10px;top:50%;transform:translateY(-50%);width:3px;height:60%;border-radius:2px;background:var(--amber)}
-.ni{position:relative}
-.ni-ico{font-size:15px;width:18px;text-align:center;flex-shrink:0}
-.ni-badge{
-  margin-left:auto;
-  background:var(--terracotta);color:#fff;
-  font-family:var(--font-ui);font-size:9px;font-weight:800;
-  padding:2px 7px;border-radius:20px;
-  letter-spacing:0.06em;
-}
+      /* Nav */
+      .sb-nav {
+        padding: 10px 10px 0;
+        flex: 0;
+      }
+      .ni {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 7px;
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--text-sec);
+        cursor: pointer;
+        transition: all 0.18s;
+        border: 1px solid transparent;
+        text-decoration: none;
+        margin-bottom: 2px;
+        position: relative;
+      }
+      .ni:hover {
+        background: var(--amber-pale);
+        color: var(--amber);
+        border-color: var(--amber-border);
+        transform: translateX(3px);
+      }
+      .ni.on {
+        background: var(--amber-pale);
+        color: var(--amber);
+        border-color: var(--amber-border);
+      }
+      .ni.on::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 18%;
+        bottom: 18%;
+        width: 3px;
+        border-radius: 0 2px 2px 0;
+        background: var(--amber);
+      }
+      .ni-ico {
+        font-size: 15px;
+        width: 18px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .ni-badge {
+        margin-left: auto;
+        background: var(--terracotta);
+        color: #fff;
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 20px;
+        letter-spacing: 0.06em;
+      }
 
-.sb-divider{height:1px;background:var(--border);margin:8px 14px}
+      /* DROP ZONE IN SIDEBAR */
+      .sb-drop {
+        padding: 12px 12px 0;
+        border-top: 1px solid var(--border);
+        margin-top: 8px;
+      }
+      .sb-drop-lbl {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: var(--amber);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .sb-drop-input {
+        width: 100%;
+        padding: 9px 12px;
+        font-family: "Barlow", sans-serif;
+        font-size: 13px;
+        color: var(--text);
+        background: var(--cream);
+        border: 1.5px solid var(--border-warm);
+        border-radius: 7px;
+        outline: none;
+        transition: all 0.2s;
+        resize: none;
+        min-height: 60px;
+        max-height: 100px;
+      }
+      .sb-drop-input::placeholder {
+        color: var(--text-dim);
+      }
+      .sb-drop-input:focus {
+        border-color: var(--amber);
+        background: var(--warm-white);
+        box-shadow: 0 0 0 3px var(--amber-pale);
+      }
+      .sb-drop-btn {
+        width: 100%;
+        margin-top: 6px;
+        padding: 9px;
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: var(--amber);
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 2px 8px rgba(200, 114, 10, 0.25);
+      }
+      .sb-drop-btn:hover {
+        background: var(--amber-light);
+      }
+      .sb-drop-feedback {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        color: var(--text-sec);
+        margin-top: 5px;
+        min-height: 14px;
+        letter-spacing: 0.04em;
+        font-style: italic;
+      }
 
-/* Crew mini */
-.sb-crew{padding:10px 12px 20px}
-.sb-crew-lbl{
-  font-family:var(--font-ui);font-size:9px;font-weight:700;
-  letter-spacing:0.18em;color:var(--text-dim);
-  text-transform:uppercase;margin-bottom:10px;
-}
-.cr{
-  display:flex;align-items:center;gap:9px;
-  padding:7px 8px;border-radius:6px;cursor:pointer;
-  transition:all 0.18s;border:1px solid transparent;
-  margin-bottom:3px;
-}
-.cr:hover{background:var(--amber-pale);border-color:var(--amber-border);transform:translateX(3px)}
-.cr-av{
-  width:30px;height:30px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;flex-shrink:0;
-  border:1px solid var(--border);
-}
-.cr-name{font-family:var(--font-ui);font-size:13px;font-weight:700;color:var(--text-sec);letter-spacing:0.06em;text-transform:uppercase}
-.cr-rank{font-family:var(--font-ui);font-size:8px;color:var(--text-dim);letter-spacing:0.08em}
+      .sb-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 8px 14px;
+      }
 
-/* ── MAIN ── */
-.main{flex:1;padding:28px 28px 80px;max-width:1100px}
+      /* Crew */
+      .sb-crew {
+        padding: 10px 12px 20px;
+      }
+      .sb-crew-lbl {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .cr {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 7px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.18s;
+        border: 1px solid transparent;
+        margin-bottom: 3px;
+      }
+      .cr:hover {
+        background: var(--amber-pale);
+        border-color: var(--amber-border);
+        transform: translateX(3px);
+      }
+      .cr-av {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+        border: 1px solid var(--border);
+      }
+      .cr-name {
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-sec);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .cr-rank {
+        font-family: var(--font-ui);
+        font-size: 8px;
+        color: var(--text-dim);
+        letter-spacing: 0.08em;
+      }
 
-/* Top bar */
-.top-bar{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  margin-bottom:24px;padding-bottom:20px;
-  border-bottom:2px solid var(--border-warm);
-}
-.tb-eyebrow{
-  font-family:var(--font-ui);font-size:10px;font-weight:600;
-  color:var(--amber);letter-spacing:0.2em;text-transform:uppercase;
-  margin-bottom:6px;
-}
-.tb-headline{
-  font-family:var(--font-ui);font-size:34px;font-weight:300;
-  color:var(--text);letter-spacing:0.03em;text-transform:uppercase;
-  line-height:1;
-}
-.tb-headline strong{font-weight:800;color:var(--amber)}
-.tb-pills{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.pill{
-  font-family:var(--font-ui);font-size:11px;font-weight:700;
-  padding:5px 14px;border-radius:20px;
-  letter-spacing:0.07em;text-transform:uppercase;
-  cursor:pointer;transition:all 0.18s;
-}
-.pill:hover{transform:translateY(-1px);filter:brightness(1.05)}
+      /* ── MAIN ── */
+      .main {
+        flex: 1;
+        padding: 26px 26px 40px;
+        max-width: 1100px;
+      }
 
-/* ── GRID ── */
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.w-full{grid-column:1/-1}
-.w-two{grid-column:span 2}
-.w-one{grid-column:span 1}
+      .top-bar {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 22px;
+        padding-bottom: 18px;
+        border-bottom: 2px solid var(--border-warm);
+      }
+      .tb-eyebrow {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--amber);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .tb-headline {
+        font-family: var(--font-ui);
+        font-size: 32px;
+        font-weight: 300;
+        color: var(--text);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        line-height: 1;
+      }
+      .tb-headline strong {
+        font-weight: 800;
+        color: var(--amber);
+      }
+      .tb-pills {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+      .pill {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 5px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+      .pill:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
 
-/* ── WIDGET BASE ── */
-.w{
-  background:var(--warm-white);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:22px 24px;
-  position:relative;overflow:hidden;
-  transition:all 0.22s;
-  box-shadow:var(--shadow);
-}
-.w:hover{
-  transform:translateY(-2px);
-  box-shadow:var(--shadow-md);
-  border-color:var(--border-warm);
-}
-.w-top-accent{
-  position:absolute;top:0;left:0;right:0;height:3px;
-  border-radius:var(--radius) var(--radius) 0 0;
-}
+      /* ── GRID ── */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 13px;
+      }
+      .w-full {
+        grid-column: 1/-1;
+      }
+      .w-two {
+        grid-column: span 2;
+      }
+      .w-one {
+        grid-column: span 1;
+      }
 
-/* Widget header */
-.w-header{
-  display:flex;align-items:center;gap:9px;
-  margin-bottom:16px;padding-bottom:12px;
-  border-bottom:1px solid var(--border);
-  position:relative;
-}
-.w-header::after{
-  content:'';position:absolute;bottom:-1px;left:0;
-  width:36px;height:2px;
-  background:var(--amber);border-radius:2px;
-  opacity:0.6;
-}
-.w-header-label{
-  font-family:var(--font-ui);font-size:12px;font-weight:800;
-  letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--text);flex:1;
-}
-.w-header-ico{font-size:14px;flex-shrink:0}
-.w-header-pulse{
-  width:7px;height:7px;border-radius:50%;
-  margin-left:auto;flex-shrink:0;
-  animation:pulse 2.5s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+      /* ── WIDGET ── */
+      .w {
+        background: var(--warm-white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 22px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.22s;
+        box-shadow: var(--shadow);
+      }
+      .w:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--border-warm);
+      }
+      .w-top-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+      .w-header {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 14px;
+        padding-bottom: 11px;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+      }
+      .w-header::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 36px;
+        height: 2px;
+        background: var(--amber);
+        border-radius: 2px;
+        opacity: 0.6;
+      }
+      .w-header-label {
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text);
+        flex: 1;
+      }
+      .w-header-ico {
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+      .w-header-pulse {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 6px currentColor;
+        animation: pulse 2.5s ease-in-out infinite;
+        margin-left: auto;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(0.8);
+        }
+      }
 
-/* ── SCOUT MOMENT ── */
-.scout-card{
-  background:linear-gradient(135deg,var(--amber-pale),rgba(200,114,10,0.04));
-  border:1px solid var(--amber-border);
-  border-radius:8px;padding:18px 20px;
-  display:flex;gap:14px;align-items:flex-start;
-}
-.scout-mascot{
-  font-size:32px;flex-shrink:0;
-  animation:float 4s ease-in-out infinite;
-}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.scout-label{
-  font-family:var(--font-ui);font-size:9px;font-weight:800;
-  letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--amber);margin-bottom:5px;display:block;
-}
-.scout-msg{
-  font-size:16px;color:var(--text);font-weight:500;
-  line-height:1.5;
-}
+      /* ── HORSEPILLOW MOMENT ── */
+      .hp-card {
+        background: linear-gradient(
+          135deg,
+          var(--amber-pale),
+          rgba(200, 114, 10, 0.04)
+        );
+        border: 1px solid var(--amber-border);
+        border-radius: 8px;
+        padding: 16px 18px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .hp-mascot {
+        font-size: 30px;
+        flex-shrink: 0;
+        animation: float 4s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      .hp-label {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--amber);
+        margin-bottom: 4px;
+        display: block;
+      }
+      .hp-msg {
+        font-size: 16px;
+        color: var(--text);
+        font-weight: 500;
+        line-height: 1.5;
+      }
 
-/* ── EVENT CARDS ── */
-.event-card{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:14px 0;
-  border-bottom:1px solid var(--border);
-  cursor:pointer;transition:all 0.22s;
-  border-radius:6px;position:relative;
-}
-.event-card:last-child{border-bottom:none;padding-bottom:0}
-.event-card:hover{padding-left:10px;background:var(--amber-pale);border-radius:7px;border-bottom-color:transparent}
-.event-card:hover .ec-expand{max-height:80px;opacity:1;margin-top:7px}
-.event-card::before{
-  content:'';position:absolute;left:0;top:20%;bottom:20%;
-  width:0;background:var(--amber);border-radius:0 2px 2px 0;
-  transition:width 0.22s;
-}
-.event-card:hover::before{width:2.5px}
-.ec-icon{
-  width:44px;height:44px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;flex-shrink:0;
-  border:1px solid var(--border);
-  transition:all 0.22s;
-}
-.event-card:hover .ec-icon{transform:scale(1.08) rotate(-4deg)}
-.ec-body{flex:1}
-.ec-eyebrow{
-  font-family:var(--font-ui);font-size:9px;font-weight:700;
-  letter-spacing:0.14em;text-transform:uppercase;
-  margin-bottom:3px;opacity:0.75;
-}
-.ec-title{
-  font-family:var(--font-ui);font-size:17px;font-weight:700;
-  color:var(--text);letter-spacing:0.04em;text-transform:uppercase;
-  margin-bottom:3px;line-height:1.2;
-}
-.ec-meta{font-size:13px;color:var(--text-sec);font-weight:400}
-.ec-expand{
-  max-height:0;opacity:0;overflow:hidden;
-  transition:all 0.28s ease;
-}
-.ec-tip{
-  display:flex;align-items:flex-start;gap:9px;
-  padding:9px 12px;
-  background:var(--warm-white);
-  border-left:2.5px solid var(--amber);
-  border-radius:0 6px 6px 0;
-  font-size:13px;font-weight:500;
-  color:var(--text-sec);line-height:1.5;
-  margin-top:2px;
-}
-.ec-tip-ico{font-size:15px;flex-shrink:0;margin-top:1px}
-.ec-time{
-  font-family:var(--font-ui);font-size:11px;font-weight:800;
-  padding:4px 11px;border-radius:6px;
-  flex-shrink:0;white-space:nowrap;
-  letter-spacing:0.07em;text-transform:uppercase;
-  margin-left:auto;align-self:flex-start;
-}
+      /* ── EVENT CARDS ── */
+      .event-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        padding: 13px 0;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.22s;
+        border-radius: 2px;
+        position: relative;
+      }
+      .event-card:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .event-card:hover {
+        padding-left: 10px;
+        background: var(--amber-pale);
+        border-radius: 7px;
+        border-bottom-color: transparent;
+      }
+      .event-card:hover .ec-expand {
+        max-height: 100px;
+        opacity: 1;
+        margin-top: 7px;
+      }
+      .event-card:hover .ec-icon {
+        transform: scale(1.08) rotate(-4deg);
+      }
+      .event-card:hover .item-actions {
+        opacity: 1;
+      }
+      .event-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 20%;
+        bottom: 20%;
+        width: 0;
+        background: var(--amber);
+        border-radius: 0 2px 2px 0;
+        transition: width 0.22s;
+      }
+      .event-card:hover::before {
+        width: 2.5px;
+      }
+      .ec-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        flex-shrink: 0;
+        border: 1px solid var(--border);
+        transition: all 0.22s;
+      }
+      .ec-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .ec-eyebrow {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+        opacity: 0.75;
+      }
+      .ec-title {
+        font-family: var(--font-ui);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+        line-height: 1.2;
+      }
+      .ec-meta {
+        font-size: 13px;
+        color: var(--text-sec);
+        font-weight: 400;
+      }
+      .ec-expand {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.28s ease;
+      }
+      .hp-tip {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        padding: 9px 12px;
+        background: var(--warm-white);
+        border-left: 2.5px solid var(--amber);
+        border-radius: 0 6px 6px 0;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-sec);
+        line-height: 1.5;
+        margin-top: 2px;
+      }
+      .hp-tip-label {
+        font-family: var(--font-ui);
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--amber);
+        margin-bottom: 3px;
+        display: block;
+      }
+      .ec-time {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 6px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        align-self: flex-start;
+      }
 
-/* ── TASK ROWS ── */
-.task-row{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 0;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:all 0.2s;
-}
-.task-row:last-child{border-bottom:none}
-.task-row:hover{padding-left:8px;background:var(--amber-pale);border-radius:6px;border-bottom-color:transparent}
-.task-check{
-  width:22px;height:22px;border-radius:50%;
-  border:2px solid var(--border-warm);
-  flex-shrink:0;transition:all 0.2s;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;color:transparent;
-}
-.task-row:hover .task-check{border-color:var(--green);color:var(--green)}
-.task-title{
-  font-family:var(--font-ui);font-size:15px;font-weight:600;
-  color:var(--text);letter-spacing:0.04em;text-transform:uppercase;flex:1;
-}
-.task-note{font-size:12px;color:var(--text-dim);margin-top:1px}
-.task-badge{
-  font-family:var(--font-ui);font-size:9px;font-weight:700;
-  padding:3px 9px;border-radius:5px;
-  flex-shrink:0;letter-spacing:0.08em;text-transform:uppercase;
-}
+      /* ── ROWS ── */
+      .task-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .task-row:last-child {
+        border-bottom: none;
+      }
+      .task-row:hover {
+        padding-left: 8px;
+        background: var(--amber-pale);
+        border-radius: 6px;
+        border-bottom-color: transparent;
+      }
+      .task-row:hover .item-actions {
+        opacity: 1;
+      }
+      .task-check {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--border-warm);
+        flex-shrink: 0;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: transparent;
+      }
+      .task-row:hover .task-check {
+        border-color: var(--green);
+        color: var(--green);
+      }
+      .task-title {
+        font-family: var(--font-ui);
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        flex: 1;
+      }
+      .task-note {
+        font-size: 12px;
+        color: var(--text-dim);
+        margin-top: 1px;
+      }
 
-/* ── DISPATCH ROWS ── */
-.dispatch-row{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:12px 0;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:all 0.2s;
-}
-.dispatch-row:last-child{border-bottom:none}
-.dispatch-row:hover{padding-left:8px;background:var(--terra-pale);border-radius:6px;border-bottom-color:transparent}
-.dispatch-ico{font-size:20px;flex-shrink:0;margin-top:2px}
-.dispatch-title{
-  font-family:var(--font-ui);font-size:15px;font-weight:700;
-  color:var(--text);letter-spacing:0.04em;text-transform:uppercase;
-  margin-bottom:3px;
-}
-.dispatch-note{font-size:13px;color:var(--text-sec);font-weight:400;line-height:1.4}
-.dispatch-from{
-  font-family:var(--font-ui);font-size:9px;font-weight:700;
-  color:var(--terracotta);letter-spacing:0.1em;text-transform:uppercase;
-  margin-top:4px;opacity:0.7;
-}
-.dispatch-type{
-  font-family:var(--font-ui);font-size:9px;font-weight:800;
-  padding:3px 9px;border-radius:5px;
-  flex-shrink:0;letter-spacing:0.08em;text-transform:uppercase;
-  margin-left:auto;align-self:flex-start;margin-top:2px;
-}
+      .dispatch-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .dispatch-row:last-child {
+        border-bottom: none;
+      }
+      .dispatch-row:hover {
+        padding-left: 8px;
+        background: var(--terra-pale);
+        border-radius: 6px;
+        border-bottom-color: transparent;
+      }
+      .dispatch-row:hover .item-actions {
+        opacity: 1;
+      }
+      .dispatch-ico {
+        font-size: 19px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .dispatch-title {
+        font-family: var(--font-ui);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+      .dispatch-note {
+        font-size: 13px;
+        color: var(--text-sec);
+        font-weight: 400;
+        line-height: 1.4;
+      }
+      .dispatch-from {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--terracotta);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 3px;
+        opacity: 0.7;
+      }
+      .dispatch-type {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 800;
+        padding: 3px 9px;
+        border-radius: 5px;
+        flex-shrink: 0;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        align-self: flex-start;
+        margin-top: 2px;
+      }
 
-/* ── UPCOMING ── */
-.upcoming-row{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 0;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:all 0.2s;
-}
-.upcoming-row:last-child{border-bottom:none}
-.upcoming-row:hover{padding-left:8px;background:var(--blue-pale);border-radius:6px;border-bottom-color:transparent}
-.upcoming-date{
-  font-family:var(--font-ui);font-size:10px;font-weight:700;
-  color:var(--text-dim);width:36px;flex-shrink:0;
-  letter-spacing:0.08em;text-align:center;text-transform:uppercase;
-  line-height:1.2;
-}
-.upcoming-title{
-  font-family:var(--font-ui);font-size:15px;font-weight:600;
-  color:var(--text);letter-spacing:0.04em;text-transform:uppercase;flex:1;
-}
-.upcoming-who{
-  font-family:var(--font-ui);font-size:9px;font-weight:700;
-  padding:3px 9px;border-radius:5px;
-  flex-shrink:0;letter-spacing:0.07em;text-transform:uppercase;
-}
+      .upcoming-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .upcoming-row:last-child {
+        border-bottom: none;
+      }
+      .upcoming-row:hover {
+        padding-left: 8px;
+        background: var(--blue-pale);
+        border-radius: 6px;
+        border-bottom-color: transparent;
+      }
+      .upcoming-row:hover .item-actions {
+        opacity: 1;
+      }
+      .upcoming-date {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-dim);
+        width: 34px;
+        flex-shrink: 0;
+        letter-spacing: 0.08em;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: 1.2;
+      }
+      .upcoming-title {
+        font-family: var(--font-ui);
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        flex: 1;
+      }
+      .upcoming-who {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 5px;
+        flex-shrink: 0;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
 
-/* ── FOOD LOTTERY ── */
-.food-result{
-  text-align:center;padding:20px;
-  background:var(--amber-pale);border:1px solid var(--amber-border);
-  border-radius:8px;margin-bottom:14px;
-  display:none;
-}
-.food-result.show{display:block}
-.food-result-name{
-  font-family:var(--font-ui);font-size:26px;font-weight:800;
-  color:var(--amber);letter-spacing:0.06em;text-transform:uppercase;
-  margin-bottom:4px;
-}
-.food-result-sub{font-size:13px;color:var(--text-sec)}
-.spin-btn{
-  width:100%;padding:14px;border-radius:8px;
-  font-family:var(--font-ui);font-size:15px;font-weight:800;
-  letter-spacing:0.12em;text-transform:uppercase;
-  background:var(--amber);color:#fff;border:none;cursor:pointer;
-  transition:all 0.2s;
-  box-shadow:0 3px 12px rgba(200,114,10,0.3);
-}
-.spin-btn:hover{background:var(--amber-light);transform:translateY(-2px);box-shadow:0 5px 18px rgba(200,114,10,0.4)}
-.spin-btn:active{transform:translateY(0)}
-.food-list{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
-.food-tag{
-  font-family:var(--font-ui);font-size:10px;font-weight:600;
-  padding:4px 10px;border-radius:20px;
-  background:var(--cream2);border:1px solid var(--border);
-  color:var(--text-sec);letter-spacing:0.06em;text-transform:uppercase;
-  cursor:default;
-}
+      .fireside-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .fireside-row:last-child {
+        border-bottom: none;
+      }
+      .fireside-row:hover {
+        padding-left: 8px;
+        background: var(--terra-pale);
+        border-radius: 6px;
+        border-bottom-color: transparent;
+      }
+      .fireside-row:hover .item-actions {
+        opacity: 1;
+      }
+      .fireside-ico {
+        font-size: 17px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .fireside-title {
+        font-family: var(--font-ui);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        flex: 1;
+      }
+      .fireside-note {
+        font-size: 12px;
+        color: var(--text-sec);
+        margin-top: 2px;
+      }
 
-/* ── WATCH LIST ── */
-.show-row{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 0;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:all 0.2s;
-}
-.show-row:last-child{border-bottom:none}
-.show-row:hover{padding-left:8px;background:var(--blue-pale);border-radius:6px;border-bottom-color:transparent}
-.show-platform{
-  font-size:18px;flex-shrink:0;width:28px;text-align:center;
-}
-.show-title{
-  font-family:var(--font-ui);font-size:15px;font-weight:700;
-  color:var(--text);letter-spacing:0.04em;text-transform:uppercase;flex:1;
-}
-.show-progress{font-size:12px;color:var(--text-dim);margin-top:1px}
-.show-status{
-  font-family:var(--font-ui);font-size:9px;font-weight:800;
-  padding:3px 9px;border-radius:5px;
-  flex-shrink:0;letter-spacing:0.08em;text-transform:uppercase;
-}
-.show-forgotten-header{
-  font-family:var(--font-ui);font-size:10px;font-weight:700;
-  letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--text-dim);padding:10px 0 6px;
-  border-top:1px dashed var(--border);margin-top:6px;
-  display:flex;align-items:center;gap:8px;
-}
-.show-forgotten-header::before{content:'👻';font-size:13px}
+      .show-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .show-row:last-child {
+        border-bottom: none;
+      }
+      .show-row:hover {
+        padding-left: 8px;
+        background: var(--blue-pale);
+        border-radius: 6px;
+        border-bottom-color: transparent;
+      }
+      .show-row:hover .item-actions {
+        opacity: 1;
+      }
+      .show-title {
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        flex: 1;
+      }
+      .show-progress {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 1px;
+      }
+      .show-status {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 800;
+        padding: 3px 9px;
+        border-radius: 5px;
+        flex-shrink: 0;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .show-forgotten-header {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        padding: 10px 0 6px;
+        border-top: 1px dashed var(--border);
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .show-forgotten-header::before {
+        content: "👻";
+        font-size: 13px;
+      }
 
-/* ── FIRESIDE ── */
-.fireside-row{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:11px 0;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:all 0.2s;
-}
-.fireside-row:last-child{border-bottom:none}
-.fireside-row:hover{padding-left:8px;background:var(--terra-pale);border-radius:6px;border-bottom-color:transparent}
-.fireside-ico{font-size:18px;flex-shrink:0;margin-top:2px}
-.fireside-title{
-  font-family:var(--font-ui);font-size:15px;font-weight:700;
-  color:var(--text);letter-spacing:0.04em;text-transform:uppercase;flex:1;
-}
-.fireside-note{font-size:12px;color:var(--text-sec);margin-top:2px}
+      /* ── PINNED NOTES ── */
+      .pin-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 7px;
+        margin-bottom: 7px;
+        background: var(--cream);
+        border: 1px solid var(--border);
+        transition: all 0.2s;
+        cursor: pointer;
+        position: relative;
+      }
+      .pin-row:last-child {
+        margin-bottom: 0;
+      }
+      .pin-row:hover {
+        background: var(--amber-pale);
+        border-color: var(--amber-border);
+        transform: translateX(3px);
+      }
+      .pin-row:hover .item-actions {
+        opacity: 1;
+      }
+      .pin-ico {
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .pin-from {
+        font-family: var(--font-ui);
+        font-size: 8px;
+        font-weight: 700;
+        color: var(--amber);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .pin-text {
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 500;
+        line-height: 1.4;
+        flex: 1;
+      }
 
-/* ── DROP ZONE ── */
-.drop-zone-bar{
-  position:fixed;bottom:0;left:220px;right:0;
-  background:var(--warm-white);
-  border-top:2px solid var(--border-warm);
-  padding:14px 28px;z-index:100;
-  display:flex;gap:12px;align-items:center;
-  box-shadow:0 -4px 20px rgba(42,34,24,0.08);
-}
-.drop-input{
-  flex:1;padding:12px 18px;
-  font-family:'Barlow',sans-serif;font-size:15px;
-  color:var(--text);
-  background:var(--cream);
-  border:1.5px solid var(--border-warm);border-radius:8px;
-  outline:none;transition:all 0.2s;
-}
-.drop-input::placeholder{color:var(--text-dim)}
-.drop-input:focus{border-color:var(--amber);background:var(--warm-white);box-shadow:0 0 0 3px var(--amber-pale)}
-.drop-btn{
-  padding:12px 22px;
-  font-family:var(--font-ui);font-size:13px;font-weight:800;
-  letter-spacing:0.1em;text-transform:uppercase;
-  background:var(--amber);color:#fff;
-  border:none;border-radius:8px;cursor:pointer;
-  transition:all 0.2s;white-space:nowrap;
-  box-shadow:0 2px 8px rgba(200,114,10,0.3);
-}
-.drop-btn:hover{background:var(--amber-light);transform:translateY(-1px)}
-.drop-btn:active{transform:translateY(0)}
-.drop-label{
-  font-family:var(--font-ui);font-size:10px;font-weight:700;
-  letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--amber);white-space:nowrap;
-}
+      /* ── TRAVEL / WHAT'S NEXT ── */
+      .next-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        background: var(--blue-pale);
+        border: 1px solid rgba(58, 90, 138, 0.2);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.22s;
+      }
+      .next-card:hover {
+        background: rgba(58, 90, 138, 0.15);
+        border-color: rgba(58, 90, 138, 0.3);
+      }
+      .next-ico {
+        font-size: 28px;
+        flex-shrink: 0;
+      }
+      .next-title {
+        font-family: var(--font-ui);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .next-meta {
+        font-size: 13px;
+        color: var(--text-sec);
+      }
+      .next-badge {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 800;
+        padding: 5px 12px;
+        border-radius: 20px;
+        background: var(--blue-pale);
+        color: var(--blue);
+        border: 1px solid rgba(58, 90, 138, 0.22);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        flex-shrink: 0;
+      }
+      .next-hp-tip {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 13px;
+        background: var(--cream);
+        border-left: 2.5px solid var(--blue);
+        border-radius: 0 6px 6px 0;
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-sec);
+        line-height: 1.6;
+      }
 
-/* ── MODALS ── */
-.modal{
-  position:fixed;inset:0;z-index:200;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(42,34,24,0.5);backdrop-filter:blur(8px);
-  opacity:0;pointer-events:none;transition:opacity 0.25s;
-}
-.modal.open{opacity:1;pointer-events:all}
-.modal-box{
-  background:var(--warm-white);
-  border:1px solid var(--border-warm);
-  border-radius:12px;padding:32px 36px;
-  min-width:360px;max-width:480px;width:90%;
-  box-shadow:var(--shadow-md);
-  animation:modalup 0.25s ease;
-  position:relative;
-}
-@keyframes modalup{from{transform:translateY(16px) scale(0.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-.modal-title{
-  font-family:var(--font-ui);font-size:22px;font-weight:800;
-  color:var(--text);letter-spacing:0.08em;text-transform:uppercase;
-  margin-bottom:6px;
-}
-.modal-sub{font-size:14px;color:var(--text-sec);margin-bottom:22px}
-.modal-close{
-  position:absolute;top:16px;right:18px;
-  font-family:var(--font-ui);font-size:10px;font-weight:700;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--text-dim);cursor:pointer;padding:4px 8px;
-  transition:color 0.2s;
-}
-.modal-close:hover{color:var(--text)}
+      /* ── MEAL PLAN ── */
+      .meal-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border);
+        transition: all 0.2s;
+        cursor: pointer;
+        position: relative;
+      }
+      .meal-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .meal-row:hover {
+        padding-left: 8px;
+        background: var(--amber-pale);
+        border-radius: 6px;
+        border-bottom-color: transparent;
+      }
+      .meal-row:hover .item-actions {
+        opacity: 1;
+      }
+      .meal-day {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--text-dim);
+        width: 30px;
+        flex-shrink: 0;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .meal-ico {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .meal-name {
+        font-size: 14px;
+        color: var(--text-sec);
+        font-weight: 400;
+        flex: 1;
+      }
+      .meal-tag {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        color: var(--terracotta);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .meal-suggest-btn {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--amber);
+        border: 1.5px solid var(--amber-border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .meal-suggest-btn:hover {
+        background: var(--amber-pale);
+      }
 
-/* Forms */
-.form-group{margin-bottom:16px}
-.form-label{
-  font-family:var(--font-ui);font-size:10px;font-weight:700;
-  letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--text-sec);display:block;margin-bottom:6px;
-}
-.form-input{
-  width:100%;padding:11px 14px;
-  font-family:'Barlow',sans-serif;font-size:15px;color:var(--text);
-  background:var(--cream);border:1.5px solid var(--border-warm);
-  border-radius:7px;outline:none;transition:all 0.2s;
-}
-.form-input:focus{border-color:var(--amber);background:var(--warm-white);box-shadow:0 0 0 3px var(--amber-pale)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-btn{
-  width:100%;padding:13px;
-  font-family:var(--font-ui);font-size:14px;font-weight:800;
-  letter-spacing:0.1em;text-transform:uppercase;
-  background:var(--amber);color:#fff;
-  border:none;border-radius:8px;cursor:pointer;
-  transition:all 0.2s;margin-top:6px;
-  box-shadow:0 2px 8px rgba(200,114,10,0.3);
-}
-.form-btn:hover{background:var(--amber-light)}
+      /* ── FOOD LOTTERY ── */
+      .food-result {
+        text-align: center;
+        padding: 18px;
+        background: var(--amber-pale);
+        border: 1px solid var(--amber-border);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        display: none;
+      }
+      .food-result.show {
+        display: block;
+      }
+      .food-result-name {
+        font-family: var(--font-ui);
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--amber);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .food-result-sub {
+        font-size: 13px;
+        color: var(--text-sec);
+      }
+      .spin-btn {
+        width: 100%;
+        padding: 13px;
+        border-radius: 8px;
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--amber);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 3px 12px rgba(200, 114, 10, 0.3);
+      }
+      .spin-btn:hover {
+        background: var(--amber-light);
+        transform: translateY(-2px);
+      }
+      .food-list {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .food-tag {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 20px;
+        background: var(--cream2);
+        border: 1px solid var(--border);
+        color: var(--text-sec);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
 
-/* Toast */
-.toast{
-  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--text);color:var(--cream);
-  font-family:var(--font-ui);font-size:13px;font-weight:600;
-  letter-spacing:0.08em;text-transform:uppercase;
-  padding:12px 24px;border-radius:8px;
-  opacity:0;transition:all 0.3s;z-index:300;white-space:nowrap;
-  pointer-events:none;
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+      /* ── EDIT/DELETE ── */
+      .item-actions {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.2s;
+        flex-shrink: 0;
+      }
+      .btn-edit {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 5px;
+        background: var(--amber-pale);
+        border: 1px solid var(--amber-border);
+        color: var(--amber);
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn-edit:hover {
+        background: var(--amber);
+        color: #fff;
+      }
+      .btn-del {
+        font-family: var(--font-ui);
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 5px;
+        background: var(--terra-pale);
+        border: 1px solid rgba(184, 90, 58, 0.22);
+        color: var(--terracotta);
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn-del:hover {
+        background: var(--terracotta);
+        color: #fff;
+      }
 
-/* ── EMPTY STATES ── */
-.empty{
-  text-align:center;padding:24px 16px;
-  font-family:var(--font-ui);font-size:12px;font-weight:600;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--text-dim);
-}
+      /* ── MODALS ── */
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(42, 34, 24, 0.5);
+        backdrop-filter: blur(8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+      }
+      .modal.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal-box {
+        background: var(--warm-white);
+        border: 1px solid var(--border-warm);
+        border-radius: 12px;
+        padding: 30px 34px;
+        min-width: 360px;
+        max-width: 480px;
+        width: 90%;
+        box-shadow: var(--shadow-md);
+        animation: modalup 0.25s ease;
+        position: relative;
+      }
+      @keyframes modalup {
+        from {
+          transform: translateY(16px) scale(0.97);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+      .modal-title {
+        font-family: var(--font-ui);
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+      .modal-sub {
+        font-size: 14px;
+        color: var(--text-sec);
+        margin-bottom: 20px;
+      }
+      .modal-close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        cursor: pointer;
+        padding: 4px 8px;
+        transition: color 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--text);
+      }
+      .form-group {
+        margin-bottom: 14px;
+      }
+      .form-label {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-sec);
+        display: block;
+        margin-bottom: 5px;
+      }
+      .form-input {
+        width: 100%;
+        padding: 10px 13px;
+        font-family: "Barlow", sans-serif;
+        font-size: 15px;
+        color: var(--text);
+        background: var(--cream);
+        border: 1.5px solid var(--border-warm);
+        border-radius: 7px;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .form-input:focus {
+        border-color: var(--amber);
+        background: var(--warm-white);
+        box-shadow: 0 0 0 3px var(--amber-pale);
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .form-btn {
+        width: 100%;
+        padding: 12px;
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: var(--amber);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 5px;
+        box-shadow: 0 2px 8px rgba(200, 114, 10, 0.3);
+      }
+      .form-btn:hover {
+        background: var(--amber-light);
+      }
+      .modal-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 14px 0;
+      }
+      .modal-danger {
+        width: 100%;
+        padding: 12px;
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: var(--terra-pale);
+        color: var(--terracotta);
+        border: 1.5px solid rgba(184, 90, 58, 0.3);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 6px;
+      }
+      .modal-danger:hover {
+        background: var(--terracotta);
+        color: #fff;
+      }
 
-/* ── RESPONSIVE ── */
-@media(max-width:768px){
-  .sidebar{display:none}
-  .main{padding:20px 16px 80px}
-  .drop-zone-bar{left:0}
-  .grid{grid-template-columns:1fr}
-  .w-two,.w-full{grid-column:1/-1}
-}
-</style>
-</head>
-<body>
-<div class="app">
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: var(--text);
+        color: var(--cream);
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 12px 24px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: all 0.3s;
+        z-index: 300;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sb-head">
-    <div class="sb-mascot">🐴</div>
-    <div class="sb-name">Jeff</div>
-    <div class="sb-role">Commander</div>
-    <div class="sb-clock" id="clock">--:-- --</div>
-    <div class="sb-date" id="date-label">Loading...</div>
-  </div>
-  <nav class="sb-nav">
-    <a class="ni on" href="#"><span class="ni-ico">⬡</span>Home</a>
-    <a class="ni" href="#" onclick="openModal('eventModal')"><span class="ni-ico">＋</span>Add Event</a>
-    <a class="ni" href="#" onclick="openModal('taskModal')"><span class="ni-ico">✓</span>Add Task</a>
-    <a class="ni" href="#" onclick="openModal('firesideModal')"><span class="ni-ico">🔥</span>Fireside</a>
-    <a class="ni" href="#" onclick="openModal('watchModal')"><span class="ni-ico">▶</span>Watch List</a>
-    <a class="ni" href="#" id="dispatch-nav"><span class="ni-ico">📬</span>Dispatches<span class="ni-badge" id="dispatch-badge" style="display:none">0</span></a>
-  </nav>
-  <div class="sb-divider"></div>
-  <div class="sb-crew">
-    <div class="sb-crew-lbl">Crew</div>
-    <div class="cr">
-      <div class="cr-av" style="background:rgba(200,114,10,0.12)">⚓</div>
-      <div><div class="cr-name">Jenn</div><div class="cr-rank">The Admiral</div></div>
-    </div>
-    <div class="cr">
-      <div class="cr-av" style="background:rgba(74,122,74,0.12)">🎖️</div>
-      <div><div class="cr-name">JJ</div><div class="cr-rank">The Cadet</div></div>
-    </div>
-    <div class="cr">
-      <div class="cr-av" style="background:rgba(58,90,138,0.12)">🐕</div>
-      <div><div class="cr-name">Bentley</div><div class="cr-rank">The Scout Dog</div></div>
-    </div>
-  </div>
-</aside>
+      /* Empty */
+      .empty {
+        text-align: center;
+        padding: 20px 12px;
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
 
-<!-- MAIN -->
-<main class="main">
-
-  <!-- Top bar -->
-  <div class="top-bar">
-    <div>
-      <div class="tb-eyebrow">🐴 Project HorsePillow · Commander's View</div>
-      <div class="tb-headline">Good <span id="greeting-time">morning</span>, <strong>Jeff</strong></div>
-      <div class="tb-pills" id="top-pills"></div>
-    </div>
-  </div>
-
-  <!-- Grid -->
-  <div class="grid">
-
-    <!-- SCOUT MOMENT -->
-    <div class="w w-full">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--amber),var(--terracotta))"></div>
-      <div class="w-header">
-        <span class="w-header-ico">🐴</span>
-        <span class="w-header-label">Scout Moment</span>
-        <span class="w-header-pulse" style="background:var(--amber)"></span>
-      </div>
-      <div class="scout-card">
-        <span class="scout-mascot">🐴</span>
-        <div>
-          <span class="scout-label">HorsePillow · Daily Read</span>
-          <div class="scout-msg" id="scout-msg">Loading your briefing...</div>
+      /* Responsive */
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+        .main {
+          padding: 16px 14px 30px;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .w-two,
+        .w-full {
+          grid-column: 1/-1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sb-head">
+          <div class="sb-mascot">🐴</div>
+          <div class="sb-name">Jeff</div>
+          <div class="sb-role">Commander</div>
+          <div class="sb-clock" id="clock">--:-- --</div>
+          <div class="sb-date" id="date-label">Loading...</div>
         </div>
+
+        <nav class="sb-nav">
+          <a class="ni on" href="#"><span class="ni-ico">⬡</span>Home</a>
+          <a class="ni" href="#" onclick="openModal('eventModal')"
+            ><span class="ni-ico">＋</span>Add Event</a
+          >
+          <a class="ni" href="#" onclick="openModal('taskModal')"
+            ><span class="ni-ico">✓</span>Add Task</a
+          >
+          <a class="ni" href="#" onclick="openModal('firesideModal')"
+            ><span class="ni-ico">🔥</span>Fireside</a
+          >
+          <a class="ni" href="#" onclick="openModal('watchModal')"
+            ><span class="ni-ico">▶</span>Watch List</a
+          >
+          <a class="ni" href="#" onclick="openModal('pinModal')"
+            ><span class="ni-ico">📌</span>Pin Note</a
+          >
+          <a class="ni" href="#" onclick="openModal('mealModal')"
+            ><span class="ni-ico">🍽</span>Meal Plan</a
+          >
+          <a class="ni" href="#" id="dispatch-nav"
+            ><span class="ni-ico">📬</span>Dispatches<span
+              class="ni-badge"
+              id="dispatch-badge"
+              style="display: none"
+              >0</span
+            ></a
+          >
+        </nav>
+
+        <!-- DROP ZONE IN SIDEBAR -->
+        <div class="sb-drop">
+          <div class="sb-drop-lbl">🐴 Drop It</div>
+          <textarea
+            class="sb-drop-input"
+            id="drop-input"
+            placeholder="Tell HorsePillow anything...&#10;JJ has soccer Thu 4pm&#10;Pick up milk&#10;Watch Severance tonight"
+          ></textarea>
+          <button class="sb-drop-btn" onclick="submitDrop()">Drop It →</button>
+          <div class="sb-drop-feedback" id="drop-feedback"></div>
+        </div>
+
+        <div class="sb-divider"></div>
+
+        <div class="sb-crew">
+          <div class="sb-crew-lbl">Crew</div>
+          <div class="cr">
+            <div class="cr-av" style="background: rgba(200, 114, 10, 0.12)">
+              ⚓
+            </div>
+            <div>
+              <div class="cr-name">Jenn</div>
+              <div class="cr-rank">The Admiral</div>
+            </div>
+          </div>
+          <div class="cr">
+            <div class="cr-av" style="background: rgba(74, 122, 74, 0.12)">
+              🎖️
+            </div>
+            <div>
+              <div class="cr-name">JJ</div>
+              <div class="cr-rank">The Cadet</div>
+            </div>
+          </div>
+          <div class="cr">
+            <div class="cr-av" style="background: rgba(58, 90, 138, 0.12)">
+              🐕
+            </div>
+            <div>
+              <div class="cr-name">Bentley</div>
+              <div class="cr-rank">The Scout Dog</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <div class="top-bar">
+          <div>
+            <div class="tb-eyebrow">
+              🐴 Project HorsePillow · Commander's View
+            </div>
+            <div class="tb-headline">
+              Good <span id="greeting-time">morning</span>,
+              <strong>Jeff</strong>
+            </div>
+            <div class="tb-pills" id="top-pills"></div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <!-- HORSEPILLOW MOMENT -->
+          <div class="w w-full">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(
+                  90deg,
+                  var(--amber),
+                  var(--terracotta)
+                );
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">🐴</span>
+              <span class="w-header-label">HorsePillow</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--amber)"
+              ></span>
+            </div>
+            <div class="hp-card">
+              <span class="hp-mascot">🐴</span>
+              <div>
+                <span class="hp-label">Daily Read</span>
+                <div class="hp-msg" id="scout-msg">
+                  Loading your briefing...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TODAY 2/3 -->
+          <div class="w w-two">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(90deg, var(--amber), transparent);
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">📅</span>
+              <span class="w-header-label" id="today-label">Today</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--amber)"
+              ></span>
+            </div>
+            <div id="today-list"><div class="empty">Loading...</div></div>
+          </div>
+
+          <!-- DISPATCHES 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(
+                  90deg,
+                  var(--terracotta),
+                  transparent
+                );
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">📬</span>
+              <span class="w-header-label">From Jenn</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--terracotta)"
+              ></span>
+            </div>
+            <div id="dispatch-list"><div class="empty">Loading...</div></div>
+          </div>
+
+          <!-- WHAT'S NEXT 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(90deg, var(--blue), transparent);
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">🔭</span>
+              <span class="w-header-label">What's Next</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--blue)"
+              ></span>
+            </div>
+            <div id="whats-next"><div class="empty">Loading...</div></div>
+          </div>
+
+          <!-- PINNED NOTES 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(90deg, var(--purple), transparent);
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">📌</span>
+              <span class="w-header-label">Pinned</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--purple)"
+              ></span>
+            </div>
+            <div id="pinned-list"><div class="empty">Loading...</div></div>
+            <button
+              class="meal-suggest-btn"
+              style="
+                border-color: rgba(106, 74, 138, 0.22);
+                color: var(--purple);
+              "
+              onclick="openModal('pinModal')"
+            >
+              + Pin Something
+            </button>
+          </div>
+
+          <!-- UPCOMING 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(90deg, var(--blue), transparent);
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">📆</span>
+              <span class="w-header-label">Coming Up</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--blue)"
+              ></span>
+            </div>
+            <div id="upcoming-list"><div class="empty">Loading...</div></div>
+          </div>
+
+          <!-- MEAL PLAN 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(
+                  90deg,
+                  var(--terracotta),
+                  transparent
+                );
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">🍽</span>
+              <span class="w-header-label">Meal Plan</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--terracotta)"
+              ></span>
+            </div>
+            <div id="meal-list">
+              <div class="empty">No meals planned yet.</div>
+            </div>
+            <button class="meal-suggest-btn" onclick="suggestMeals()">
+              🐴 Suggest This Week
+            </button>
+          </div>
+
+          <!-- FIRESIDE 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(
+                  90deg,
+                  var(--terracotta),
+                  transparent
+                );
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">🔥</span>
+              <span class="w-header-label">Fireside</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--terracotta)"
+              ></span>
+            </div>
+            <div id="fireside-list"><div class="empty">Loading...</div></div>
+            <button
+              class="meal-suggest-btn"
+              onclick="openModal('firesideModal')"
+            >
+              + Add Topic
+            </button>
+          </div>
+
+          <!-- WATCH LIST 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(90deg, var(--blue), transparent);
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">📺</span>
+              <span class="w-header-label">Watch List</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--blue)"
+              ></span>
+            </div>
+            <div id="watch-list"><div class="empty">Loading...</div></div>
+          </div>
+
+          <!-- FOOD LOTTERY 1/3 -->
+          <div class="w w-one">
+            <div
+              class="w-top-accent"
+              style="
+                background: linear-gradient(90deg, var(--green), transparent);
+              "
+            ></div>
+            <div class="w-header">
+              <span class="w-header-ico">🎲</span>
+              <span class="w-header-label">Food Lottery</span>
+              <span
+                class="w-header-pulse"
+                style="background: var(--green)"
+              ></span>
+            </div>
+            <div class="food-result" id="food-result">
+              <div class="food-result-name" id="food-name">—</div>
+              <div class="food-result-sub">Tonight's pick 🎉</div>
+            </div>
+            <button class="spin-btn" onclick="spinFood()">
+              🎲 Spin the Wheel
+            </button>
+            <div class="food-list" id="food-list"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ADD EVENT MODAL -->
+    <div
+      class="modal"
+      id="eventModal"
+      onclick="closeModalOutside(event,'eventModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('eventModal')">
+          ✕ Close
+        </div>
+        <div class="modal-title">Add Event</div>
+        <div class="modal-sub">What's happening and when?</div>
+        <div class="form-group">
+          <label class="form-label">Title</label
+          ><input
+            class="form-input"
+            id="ev-title"
+            placeholder="JJ Soccer Practice..."
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date</label
+            ><input class="form-input" id="ev-date" type="date" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time</label
+            ><input class="form-input" id="ev-time" type="time" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label
+          ><input
+            class="form-input"
+            id="ev-location"
+            placeholder="Riverview Park..."
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Who</label>
+            <select class="form-input" id="ev-person">
+              <option value="family">Whole Family</option>
+              <option value="jeff">Jeff</option>
+              <option value="jenn">Jenn</option>
+              <option value="jj">JJ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-input" id="ev-type">
+              <option value="event">Event</option>
+              <option value="activity">Activity</option>
+              <option value="appointment">Appointment</option>
+              <option value="work">Work</option>
+              <option value="fun">Fun</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note</label
+          ><input
+            class="form-input"
+            id="ev-note"
+            placeholder="Any details..."
+          />
+        </div>
+        <button class="form-btn" onclick="addEvent()">Add Event</button>
       </div>
     </div>
 
-    <!-- TODAY — 2/3 -->
-    <div class="w w-two">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--amber),transparent)"></div>
-      <div class="w-header">
-        <span class="w-header-ico">📅</span>
-        <span class="w-header-label" id="today-label">Today</span>
-        <span class="w-header-pulse" style="background:var(--amber)"></span>
-      </div>
-      <div id="today-list"><div class="empty">Loading...</div></div>
-    </div>
-
-    <!-- DISPATCHES — 1/3 -->
-    <div class="w w-one">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--terracotta),transparent)"></div>
-      <div class="w-header">
-        <span class="w-header-ico">📬</span>
-        <span class="w-header-label">From Jenn</span>
-        <span class="w-header-pulse" style="background:var(--terracotta)"></span>
-      </div>
-      <div id="dispatch-list"><div class="empty">Loading...</div></div>
-    </div>
-
-    <!-- UPCOMING — 1/3 -->
-    <div class="w w-one">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--blue),transparent)"></div>
-      <div class="w-header">
-        <span class="w-header-ico">🔭</span>
-        <span class="w-header-label">What's Coming</span>
-        <span class="w-header-pulse" style="background:var(--blue)"></span>
-      </div>
-      <div id="upcoming-list"><div class="empty">Loading...</div></div>
-    </div>
-
-    <!-- FIRESIDE — 1/3 -->
-    <div class="w w-one">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--terracotta),transparent)"></div>
-      <div class="w-header">
-        <span class="w-header-ico">🔥</span>
-        <span class="w-header-label">Fireside</span>
-        <span class="w-header-pulse" style="background:var(--terracotta)"></span>
-      </div>
-      <div id="fireside-list"><div class="empty">Loading...</div></div>
-      <button class="form-btn" style="margin-top:12px;padding:10px" onclick="openModal('firesideModal')">+ Add Topic</button>
-    </div>
-
-    <!-- WATCH LIST — 1/3 -->
-    <div class="w w-one">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--blue),transparent)"></div>
-      <div class="w-header">
-        <span class="w-header-ico">📺</span>
-        <span class="w-header-label">Watch List</span>
-        <span class="w-header-pulse" style="background:var(--blue)"></span>
-      </div>
-      <div id="watch-list"><div class="empty">Loading...</div></div>
-    </div>
-
-    <!-- FOOD LOTTERY — 1/3 -->
-    <div class="w w-one">
-      <div class="w-top-accent" style="background:linear-gradient(90deg,var(--green),transparent)"></div>
-      <div class="w-header">
-        <span class="w-header-ico">🎲</span>
-        <span class="w-header-label">Food Lottery</span>
-        <span class="w-header-pulse" style="background:var(--green)"></span>
-      </div>
-      <div class="food-result" id="food-result">
-        <div class="food-result-name" id="food-name">—</div>
-        <div class="food-result-sub">Tonight's pick 🎉</div>
-      </div>
-      <button class="spin-btn" onclick="spinFood()">🎲 Spin the Wheel</button>
-      <div class="food-list" id="food-list"></div>
-    </div>
-
-  </div>
-</main>
-</div>
-
-<!-- DROP ZONE BAR -->
-<div class="drop-zone-bar">
-  <span class="drop-label">🐴 Drop</span>
-  <input class="drop-input" id="drop-input" placeholder="Tell HorsePillow anything... JJ has soccer Thursday, pick up milk, watch Severance tonight..." />
-  <button class="drop-btn" onclick="submitDrop()">Drop It</button>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- ADD EVENT MODAL -->
-<div class="modal" id="eventModal" onclick="closeModalOutside(event,'eventModal')">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeModal('eventModal')">✕ Close</div>
-    <div class="modal-title">Add Event</div>
-    <div class="modal-sub">What's happening and when?</div>
-    <div class="form-group">
-      <label class="form-label">Event Title</label>
-      <input class="form-input" id="ev-title" placeholder="JJ Soccer Practice..."/>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Date</label>
-        <input class="form-input" id="ev-date" type="date"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Time</label>
-        <input class="form-input" id="ev-time" type="time"/>
+    <!-- ADD TASK MODAL -->
+    <div
+      class="modal"
+      id="taskModal"
+      onclick="closeModalOutside(event,'taskModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('taskModal')">✕ Close</div>
+        <div class="modal-title">Add Task</div>
+        <div class="modal-sub">Something that needs to get done.</div>
+        <div class="form-group">
+          <label class="form-label">Task</label
+          ><input
+            class="form-input"
+            id="task-title"
+            placeholder="Order JJ's cleats..."
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Who</label>
+            <select class="form-input" id="task-person">
+              <option value="jeff">Jeff</option>
+              <option value="jenn">Jenn</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Due Date</label
+            ><input class="form-input" id="task-due" type="date" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note</label
+          ><input
+            class="form-input"
+            id="task-note"
+            placeholder="Any context..."
+          />
+        </div>
+        <button class="form-btn" onclick="addTask()">Add Task</button>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Who</label>
-        <select class="form-input" id="ev-person">
-          <option value="family">Whole Family</option>
-          <option value="jeff">Jeff</option>
-          <option value="jenn">Jenn</option>
-          <option value="jj">JJ</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Type</label>
-        <select class="form-input" id="ev-type">
-          <option value="event">Event</option>
-          <option value="activity">Activity</option>
-          <option value="appointment">Appointment</option>
-          <option value="work">Work</option>
-          <option value="fun">Fun</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Note (optional)</label>
-      <input class="form-input" id="ev-note" placeholder="Any details..."/>
-    </div>
-    <button class="form-btn" onclick="addEvent()">Add Event</button>
-  </div>
-</div>
 
-<!-- ADD TASK MODAL -->
-<div class="modal" id="taskModal" onclick="closeModalOutside(event,'taskModal')">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeModal('taskModal')">✕ Close</div>
-    <div class="modal-title">Add Task</div>
-    <div class="modal-sub">Something that needs to get done.</div>
-    <div class="form-group">
-      <label class="form-label">Task</label>
-      <input class="form-input" id="task-title" placeholder="Order JJ's cleats..."/>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Who</label>
-        <select class="form-input" id="task-person">
-          <option value="jeff">Jeff</option>
-          <option value="jenn">Jenn</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Due Date</label>
-        <input class="form-input" id="task-due" type="date"/>
+    <!-- FIRESIDE MODAL -->
+    <div
+      class="modal"
+      id="firesideModal"
+      onclick="closeModalOutside(event,'firesideModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('firesideModal')">
+          ✕ Close
+        </div>
+        <div class="modal-title">🔥 Fireside</div>
+        <div class="modal-sub">
+          Add a topic for your next sit-down with Jenn.
+        </div>
+        <div class="form-group">
+          <label class="form-label">Topic</label
+          ><input
+            class="form-input"
+            id="fs-title"
+            placeholder="Plan next mini adventure..."
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note</label
+          ><input
+            class="form-input"
+            id="fs-note"
+            placeholder="Any context..."
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Schedule For</label
+          ><input class="form-input" id="fs-date" type="date" />
+        </div>
+        <button class="form-btn" onclick="addFireside()">
+          Add to Fireside
+        </button>
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Note (optional)</label>
-      <input class="form-input" id="task-note" placeholder="Any context..."/>
-    </div>
-    <button class="form-btn" onclick="addTask()">Add Task</button>
-  </div>
-</div>
 
-<!-- FIRESIDE MODAL -->
-<div class="modal" id="firesideModal" onclick="closeModalOutside(event,'firesideModal')">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeModal('firesideModal')">✕ Close</div>
-    <div class="modal-title">🔥 Fireside</div>
-    <div class="modal-sub">Add a topic for your next sit-down with Jenn.</div>
-    <div class="form-group">
-      <label class="form-label">Topic</label>
-      <input class="form-input" id="fs-title" placeholder="Plan next mini adventure..."/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Note (optional)</label>
-      <input class="form-input" id="fs-note" placeholder="Any context to add..."/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Schedule For (optional)</label>
-      <input class="form-input" id="fs-date" type="date"/>
-    </div>
-    <button class="form-btn" onclick="addFireside()">Add to Fireside</button>
-  </div>
-</div>
-
-<!-- WATCH MODAL -->
-<div class="modal" id="watchModal" onclick="closeModalOutside(event,'watchModal')">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeModal('watchModal')">✕ Close</div>
-    <div class="modal-title">📺 Add Show</div>
-    <div class="modal-sub">Add to your watch list.</div>
-    <div class="form-group">
-      <label class="form-label">Show Title</label>
-      <input class="form-input" id="watch-title" placeholder="Severance..."/>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Platform</label>
-        <input class="form-input" id="watch-platform" placeholder="Apple TV+..."/>
+    <!-- WATCH MODAL -->
+    <div
+      class="modal"
+      id="watchModal"
+      onclick="closeModalOutside(event,'watchModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('watchModal')">
+          ✕ Close
+        </div>
+        <div class="modal-title">📺 Add Show</div>
+        <div class="modal-sub">Add to your watch list.</div>
+        <div class="form-group">
+          <label class="form-label">Show Title</label
+          ><input
+            class="form-input"
+            id="watch-title"
+            placeholder="Severance..."
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Platform</label
+            ><input
+              class="form-input"
+              id="watch-platform"
+              placeholder="Apple TV+..."
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-input" id="watch-status">
+              <option value="watching">Watching</option>
+              <option value="up_next">Up Next</option>
+              <option value="forgotten">Forgotten</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Season</label
+            ><input
+              class="form-input"
+              id="watch-season"
+              type="number"
+              value="1"
+              min="1"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Episode</label
+            ><input
+              class="form-input"
+              id="watch-episode"
+              type="number"
+              value="1"
+              min="1"
+            />
+          </div>
+        </div>
+        <button class="form-btn" onclick="addShow()">Add Show</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Status</label>
-        <select class="form-input" id="watch-status">
-          <option value="watching">Watching</option>
-          <option value="up_next">Up Next</option>
-          <option value="forgotten">Forgotten</option>
-        </select>
+    </div>
+
+    <!-- PIN NOTE MODAL -->
+    <div
+      class="modal"
+      id="pinModal"
+      onclick="closeModalOutside(event,'pinModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('pinModal')">✕ Close</div>
+        <div class="modal-title">📌 Pin a Note</div>
+        <div class="modal-sub">Something worth keeping visible.</div>
+        <div class="form-group">
+          <label class="form-label">Note</label
+          ><input
+            class="form-input"
+            id="pin-text"
+            placeholder="JJ needs new cleats size 4..."
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">From</label>
+            <select class="form-input" id="pin-from">
+              <option value="jeff">Jeff</option>
+              <option value="jenn">Jenn</option>
+              <option value="hp">HorsePillow</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">For</label>
+            <select class="form-input" id="pin-to">
+              <option value="jeff">Jeff</option>
+              <option value="jenn">Jenn</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
+        </div>
+        <button class="form-btn" onclick="addPin()">Pin It</button>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Season</label>
-        <input class="form-input" id="watch-season" type="number" value="1" min="1"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Episode</label>
-        <input class="form-input" id="watch-episode" type="number" value="1" min="1"/>
+
+    <!-- MEAL MODAL -->
+    <div
+      class="modal"
+      id="mealModal"
+      onclick="closeModalOutside(event,'mealModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('mealModal')">✕ Close</div>
+        <div class="modal-title">🍽 Add Meal</div>
+        <div class="modal-sub">What's for dinner?</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Day</label>
+            <select class="form-input" id="meal-day">
+              <option value="Mon">Monday</option>
+              <option value="Tue">Tuesday</option>
+              <option value="Wed">Wednesday</option>
+              <option value="Thu">Thursday</option>
+              <option value="Fri">Friday</option>
+              <option value="Sat">Saturday</option>
+              <option value="Sun">Sunday</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meal</label
+            ><input
+              class="form-input"
+              id="meal-name"
+              placeholder="Pasta night..."
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note</label
+          ><input
+            class="form-input"
+            id="meal-note"
+            placeholder="Jeff away, easy night..."
+          />
+        </div>
+        <button class="form-btn" onclick="addMeal()">Add Meal</button>
       </div>
     </div>
-    <button class="form-btn" onclick="addShow()">Add Show</button>
-  </div>
-</div>
 
-<script>
-// ── CLOCK ──
-function tick(){
-  const n=new Date(),pad=x=>x.toString().padStart(2,'0');
-  let h=n.getHours();const ap=h>=12?'PM':'AM';h=h%12||12;
-  document.getElementById('clock').textContent=h+':'+pad(n.getMinutes())+' '+ap;
-  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('date-label').textContent=days[n.getDay()]+' · '+months[n.getMonth()]+' '+n.getDate();
-  const hour=n.getHours();
-  document.getElementById('greeting-time').textContent=hour<12?'morning':hour<17?'afternoon':'evening';
-  document.getElementById('today-label').textContent='Today · '+days[n.getDay()]+' '+months[n.getMonth()]+' '+n.getDate();
-}
-setInterval(tick,1000);tick();
+    <!-- EDIT MODAL -->
+    <div
+      class="modal"
+      id="editModal"
+      onclick="closeModalOutside(event,'editModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('editModal')">✕ Close</div>
+        <div class="modal-title" id="edit-modal-title">Edit</div>
+        <div class="modal-sub" id="edit-modal-sub"></div>
+        <div id="edit-modal-fields"></div>
+        <button class="form-btn" onclick="saveEdit()">Save Changes</button>
+        <div class="modal-divider"></div>
+        <button class="modal-danger" onclick="confirmDelete()">
+          Delete This
+        </button>
+      </div>
+    </div>
 
-// ── HELPERS ──
-function fmt12(t){
-  if(!t)return'';
-  const[h,m]=t.split(':');
-  const hour=parseInt(h);
-  return(hour%12||12)+':'+m+(hour>=12?' PM':' AM');
-}
-function fmtDate(d){
-  if(!d)return'';
-  const parts=d.split('-');
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return months[parseInt(parts[1])-1]+' '+parseInt(parts[2]);
-}
-function personColor(p){
-  const colors={jeff:'var(--blue)',jenn:'var(--amber)',jj:'var(--green)',family:'var(--terracotta)',bentley:'var(--blue)'};
-  return colors[p]||'var(--text-dim)';
-}
-function personBg(p){
-  const colors={jeff:'var(--blue-pale)',jenn:'var(--amber-pale)',jj:'var(--green-pale)',family:'var(--terra-pale)'};
-  return colors[p]||'var(--cream2)';
-}
-function typeEmoji(t){
-  const e={activity:'⚽',appointment:'🏥',work:'💻',fun:'🎉',event:'📅'};
-  return e[t]||'📅';
-}
+    <!-- CONFIRM DELETE -->
+    <div
+      class="modal"
+      id="confirmModal"
+      onclick="closeModalOutside(event,'confirmModal')"
+    >
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeModal('confirmModal')">
+          ✕ Cancel
+        </div>
+        <div class="modal-title">Are you sure?</div>
+        <div class="modal-sub">This can't be undone.</div>
+        <button class="modal-danger" onclick="executeDelete()">
+          Yes, Delete It
+        </button>
+      </div>
+    </div>
 
-// ── TOAST ──
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
-}
+    <script>
+      // ── CLOCK ──
+      function tick() {
+        const n = new Date(),
+          pad = (x) => x.toString().padStart(2, "0");
+        let h = n.getHours();
+        const ap = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        document.getElementById("clock").textContent =
+          h + ":" + pad(n.getMinutes()) + " " + ap;
+        const days = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        document.getElementById("date-label").textContent =
+          days[n.getDay()] + " · " + months[n.getMonth()] + " " + n.getDate();
+        document.getElementById("greeting-time").textContent =
+          n.getHours() < 12
+            ? "morning"
+            : n.getHours() < 17
+              ? "afternoon"
+              : "evening";
+        document.getElementById("today-label").textContent =
+          "Today · " +
+          days[n.getDay()] +
+          " " +
+          months[n.getMonth()] +
+          " " +
+          n.getDate();
+      }
+      setInterval(tick, 1000);
+      tick();
 
-// ── MODALS ──
-function openModal(id){document.getElementById(id).classList.add('open')}
-function closeModal(id){document.getElementById(id).classList.remove('open')}
-function closeModalOutside(e,id){if(e.target===document.getElementById(id))closeModal(id)}
+      // ── HELPERS ──
+      function fmt12(t) {
+        if (!t) return "";
+        const [h, m] = t.split(":");
+        const hr = parseInt(h);
+        return (hr % 12 || 12) + ":" + m + (hr >= 12 ? " PM" : " AM");
+      }
+      function fmtDate(d) {
+        if (!d) return "";
+        const p = d.split("-");
+        const mo = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        return mo[parseInt(p[1]) - 1] + " " + parseInt(p[2]);
+      }
+      function personColor(p) {
+        return (
+          {
+            jeff: "var(--blue)",
+            jenn: "var(--amber)",
+            jj: "var(--green)",
+            family: "var(--terracotta)",
+          }[p] || "var(--text-dim)"
+        );
+      }
+      function personBg(p) {
+        return (
+          {
+            jeff: "var(--blue-pale)",
+            jenn: "var(--amber-pale)",
+            jj: "var(--green-pale)",
+            family: "var(--terra-pale)",
+          }[p] || "var(--cream2)"
+        );
+      }
+      function typeEmoji(t) {
+        return (
+          {
+            activity: "⚽",
+            appointment: "🏥",
+            work: "💻",
+            fun: "🎉",
+            event: "📅",
+          }[t] || "📅"
+        );
+      }
+      function esc(s) {
+        return (s || "")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+      function toast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2800);
+      }
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
+      function closeModalOutside(e, id) {
+        if (e.target === document.getElementById(id)) closeModal(id);
+      }
 
-// ── LOAD SCOUT ──
-async function loadScout(){
-  try{
-    const r=await fetch('/api/scout');
-    const d=await r.json();
-    document.getElementById('scout-msg').textContent=d.message;
-  }catch(e){document.getElementById('scout-msg').textContent="HorsePillow is scouting ahead. Check back soon."}
-}
+      // ── SCOUT / HORSEPILLOW ──
+      async function loadScout() {
+        try {
+          const d = await fetch("/api/scout").then((r) => r.json());
+          document.getElementById("scout-msg").textContent = d.message;
+        } catch {
+          document.getElementById("scout-msg").textContent =
+            "HorsePillow is on it. Check back in a moment.";
+        }
+      }
 
-// ── LOAD TODAY ──
-async function loadToday(){
-  try{
-    const r=await fetch('/api/today');
-    const events=await r.json();
-    const el=document.getElementById('today-list');
-    if(!events.length){
-      el.innerHTML='<div class="empty">Nothing on the board today. Enjoy the breathing room.</div>';
-      return;
-    }
-    el.innerHTML=events.map(ev=>`
+      // ── TODAY ──
+      async function loadToday() {
+        try {
+          const events = await fetch("/api/today").then((r) => r.json());
+          const el = document.getElementById("today-list");
+          if (!events.length) {
+            el.innerHTML =
+              '<div class="empty">Nothing on the board today. Enjoy the breathing room.</div>';
+            return;
+          }
+          el.innerHTML = events
+            .map(
+              (ev) => `
       <div class="event-card">
         <div class="ec-icon" style="background:${personBg(ev.person)}">${typeEmoji(ev.type)}</div>
         <div class="ec-body">
-          <div class="ec-eyebrow" style="color:${personColor(ev.person)}">${ev.person.charAt(0).toUpperCase()+ev.person.slice(1)} · ${ev.type}</div>
-          <div class="ec-title">${ev.title}</div>
-          <div class="ec-meta">${ev.note||''}</div>
-          ${ev.note?`<div class="ec-expand"><div class="ec-tip"><span class="ec-tip-ico">🐴</span>${ev.note}</div></div>`:''}
+          <div class="ec-eyebrow" style="color:${personColor(ev.person)}">${ev.person.charAt(0).toUpperCase() + ev.person.slice(1)} · ${ev.type}</div>
+          <div class="ec-title">${esc(ev.title)}</div>
+          <div class="ec-meta">${ev.location ? "📍 " + esc(ev.location) + (ev.note ? " · " : "") : ""}${esc(ev.note || "")}</div>
+          ${ev.note || ev.location ? `<div class="ec-expand"><div class="hp-tip"><span>🐴</span><div><span class="hp-tip-label">HorsePillow</span>${ev.location ? "📍 " + esc(ev.location) + " — " : ""}${esc(ev.note || "")}</div></div></div>` : ""}
         </div>
-        ${ev.time?`<div class="ec-time" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${fmt12(ev.time)}</div>`:''}
-      </div>
-    `).join('');
-  }catch(e){document.getElementById('today-list').innerHTML='<div class="empty">Could not load today.</div>'}
-}
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+          ${ev.time ? `<div class="ec-time" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${fmt12(ev.time)}</div>` : ""}
+          <div class="item-actions">
+            <span class="btn-edit" onclick="openEdit('event',${ev.id},${JSON.stringify(ev).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-del" onclick="quickDel('event',${ev.id})">Del</span>
+          </div>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {
+          document.getElementById("today-list").innerHTML =
+            '<div class="empty">Could not load today.</div>';
+        }
+      }
 
-// ── LOAD DISPATCHES ──
-async function loadDispatches(){
-  try{
-    const r=await fetch('/api/dispatches');
-    const dispatches=await r.json();
-    const el=document.getElementById('dispatch-list');
-    const badge=document.getElementById('dispatch-badge');
-    if(dispatches.length>0){
-      badge.textContent=dispatches.length;
-      badge.style.display='inline-block';
-    }
-    if(!dispatches.length){
-      el.innerHTML='<div class="empty">Nothing from Jenn right now.</div>';
-      return;
-    }
-    el.innerHTML=dispatches.map(d=>`
-      <div class="dispatch-row" onclick="doneDispatch(${d.id},this)">
-        <span class="dispatch-ico">${d.type==='note'?'❤️':d.type==='task'?'✅':'💭'}</span>
+      // ── DISPATCHES ──
+      async function loadDispatches() {
+        try {
+          const dispatches = await fetch("/api/dispatches").then((r) =>
+            r.json(),
+          );
+          const el = document.getElementById("dispatch-list");
+          const badge = document.getElementById("dispatch-badge");
+          badge.textContent = dispatches.length;
+          badge.style.display = dispatches.length ? "inline-block" : "none";
+          if (!dispatches.length) {
+            el.innerHTML =
+              '<div class="empty">Nothing from Jenn right now.</div>';
+            return;
+          }
+          el.innerHTML = dispatches
+            .map(
+              (d) => `
+      <div class="dispatch-row">
+        <span class="dispatch-ico">${d.type === "note" ? "❤️" : d.type === "task" ? "✅" : "💭"}</span>
         <div style="flex:1">
-          <div class="dispatch-title">${d.title}</div>
-          ${d.note?`<div class="dispatch-note">${d.note}</div>`:''}
+          <div class="dispatch-title">${esc(d.title)}</div>
+          ${d.note ? `<div class="dispatch-note">${esc(d.note)}</div>` : ""}
           <div class="dispatch-from">From Jenn</div>
         </div>
-        <div class="dispatch-type" style="background:${d.type==='note'?'var(--terra-pale)':'var(--amber-pale)'};color:${d.type==='note'?'var(--terracotta)':'var(--amber)'}">${d.type}</div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+          <div class="dispatch-type" style="background:${d.type === "note" ? "var(--terra-pale)" : "var(--amber-pale)"};color:${d.type === "note" ? "var(--terracotta)" : "var(--amber)"}">${d.type}</div>
+          <div class="item-actions">
+            <span class="btn-edit" onclick="openEdit('dispatch',${d.id},${JSON.stringify(d).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-del" onclick="quickDel('dispatch',${d.id})">Del</span>
+          </div>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {}
+      }
+
+      // ── WHAT'S NEXT ──
+      async function loadWhatsNext() {
+        try {
+          const events = await fetch("/api/upcoming").then((r) => r.json());
+          const el = document.getElementById("whats-next");
+          if (!events.length) {
+            el.innerHTML =
+              '<div class="empty">Nothing significant on the horizon yet.</div>';
+            return;
+          }
+          const next = events[0];
+          const today = new Date();
+          const eventDate = new Date(next.date + "T00:00:00");
+          const diff = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
+          const countdown =
+            diff === 0 ? "Today" : diff === 1 ? "Tomorrow" : `In ${diff} days`;
+          el.innerHTML = `
+      <div class="next-card">
+        <div class="next-ico">${typeEmoji(next.type)}</div>
+        <div style="flex:1">
+          <div class="next-title">${esc(next.title)}</div>
+          <div class="next-meta">${fmtDate(next.date)}${next.time ? " · " + fmt12(next.time) : ""}${next.location ? " · 📍" + esc(next.location) : ""}</div>
+        </div>
+        <div class="next-badge">${countdown}</div>
       </div>
-    `).join('');
-  }catch(e){document.getElementById('dispatch-list').innerHTML='<div class="empty">Could not load dispatches.</div>'}
-}
+      ${next.note ? `<div class="next-hp-tip"><span>🐴</span><div><span style="font-family:var(--font-ui);font-size:9px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:3px">HorsePillow</span>${esc(next.note)}</div></div>` : ""}
+      ${events
+        .slice(1, 4)
+        .map(
+          (ev) => `
+        <div class="upcoming-row">
+          <div class="upcoming-date">${fmtDate(ev.date)}</div>
+          <div style="flex:1"><div class="upcoming-title">${esc(ev.title)}</div>${ev.time ? `<div style="font-size:11px;color:var(--text-dim)">${fmt12(ev.time)}</div>` : ""}</div>
+          <div class="upcoming-who" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${ev.person}</div>
+        </div>`,
+        )
+        .join("")}`;
+        } catch {}
+      }
 
-async function doneDispatch(id,el){
-  await fetch(`/api/dispatches/${id}/done`,{method:'PATCH'});
-  el.style.opacity='0';el.style.transform='translateX(20px)';
-  setTimeout(()=>{el.remove();loadDispatches();},300);
-  toast("Got it. Marked done. 🐴");
-}
+      // ── PINNED NOTES ──
+      async function loadPinned() {
+        try {
+          const pins = await fetch("/api/pins").then((r) => r.json());
+          const el = document.getElementById("pinned-list");
+          if (!pins.length) {
+            el.innerHTML =
+              '<div class="empty">Nothing pinned. HorsePillow will surface important things here.</div>';
+            return;
+          }
+          el.innerHTML = pins
+            .map(
+              (p) => `
+      <div class="pin-row">
+        <span class="pin-ico">📌</span>
+        <div style="flex:1">
+          ${p.from_person && p.from_person !== "jeff" ? `<div class="pin-from">From ${p.from_person.charAt(0).toUpperCase() + p.from_person.slice(1)}</div>` : ""}
+          <div class="pin-text">${esc(p.text)}</div>
+        </div>
+        <div class="item-actions">
+          <span class="btn-del" onclick="quickDel('pin',${p.id})">✕</span>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {}
+      }
 
-// ── LOAD UPCOMING ──
-async function loadUpcoming(){
-  try{
-    const r=await fetch('/api/upcoming');
-    const events=await r.json();
-    const el=document.getElementById('upcoming-list');
-    if(!events.length){
-      el.innerHTML='<div class="empty">Nothing on the horizon yet.</div>';
-      return;
-    }
-    el.innerHTML=events.map(ev=>`
+      // ── UPCOMING ──
+      async function loadUpcoming() {
+        try {
+          const events = await fetch("/api/upcoming").then((r) => r.json());
+          const el = document.getElementById("upcoming-list");
+          if (!events.length) {
+            el.innerHTML =
+              '<div class="empty">Nothing on the horizon yet.</div>';
+            return;
+          }
+          el.innerHTML = events
+            .map(
+              (ev) => `
       <div class="upcoming-row">
         <div class="upcoming-date">${fmtDate(ev.date)}</div>
         <div style="flex:1">
-          <div class="upcoming-title">${ev.title}</div>
-          ${ev.time?`<div style="font-size:12px;color:var(--text-dim)">${fmt12(ev.time)}</div>`:''}
+          <div class="upcoming-title">${esc(ev.title)}</div>
+          ${ev.location ? `<div style="font-size:11px;color:var(--text-dim)">📍 ${esc(ev.location)}</div>` : ""}
+          ${ev.time ? `<div style="font-size:11px;color:var(--text-dim)">${fmt12(ev.time)}</div>` : ""}
         </div>
-        <div class="upcoming-who" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${ev.person}</div>
-      </div>
-    `).join('');
-  }catch(e){}
-}
-
-// ── LOAD FIRESIDE ──
-async function loadFireside(){
-  try{
-    const r=await fetch('/api/fireside');
-    const items=await r.json();
-    const el=document.getElementById('fireside-list');
-    if(!items.length){
-      el.innerHTML='<div class="empty">No topics yet. Add something to discuss with Jenn.</div>';
-      return;
-    }
-    el.innerHTML=items.map(i=>`
-      <div class="fireside-row" onclick="doneFireside(${i.id},this)">
-        <span class="fireside-ico">🔥</span>
-        <div>
-          <div class="fireside-title">${i.title}</div>
-          ${i.note?`<div class="fireside-note">${i.note}</div>`:''}
-          ${i.scheduled_date?`<div class="fireside-note">Scheduled: ${fmtDate(i.scheduled_date)}</div>`:''}
-        </div>
-      </div>
-    `).join('');
-  }catch(e){}
-}
-
-async function doneFireside(id,el){
-  await fetch(`/api/fireside/${id}/done`,{method:'PATCH'});
-  el.style.opacity='0';setTimeout(()=>{el.remove();},300);
-  toast("Fireside topic done. 🔥");
-}
-
-// ── LOAD WATCH LIST ──
-async function loadWatchList(){
-  try{
-    const r=await fetch('/api/watchlist');
-    const shows=await r.json();
-    const el=document.getElementById('watch-list');
-    if(!shows.length){
-      el.innerHTML='<div class="empty">No shows added yet.</div>';
-      return;
-    }
-    const watching=shows.filter(s=>s.status==='watching'||s.status==='up_next');
-    const forgotten=shows.filter(s=>s.status==='forgotten');
-    let html='';
-    watching.forEach(s=>{
-      html+=`<div class="show-row">
-        <div class="show-platform">📺</div>
-        <div style="flex:1">
-          <div class="show-title">${s.title}</div>
-          <div class="show-progress">S${s.season} · E${s.episode}${s.platform?' · '+s.platform:''}</div>
-        </div>
-        <div class="show-status" style="background:${s.status==='watching'?'var(--green-pale)':'var(--blue-pale)'};color:${s.status==='watching'?'var(--green)':'var(--blue)'}">${s.status==='watching'?'Watching':'Up Next'}</div>
-      </div>`;
-    });
-    if(forgotten.length){
-      html+=`<div class="show-forgotten-header">Forgotten — Still Worth It?</div>`;
-      forgotten.forEach(s=>{
-        html+=`<div class="show-row">
-          <div class="show-platform">⏸</div>
-          <div style="flex:1">
-            <div class="show-title" style="color:var(--text-sec)">${s.title}</div>
-            <div class="show-progress">Left off S${s.season} · E${s.episode}</div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+          <div class="upcoming-who" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${ev.person}</div>
+          <div class="item-actions">
+            <span class="btn-edit" onclick="openEdit('event',${ev.id},${JSON.stringify(ev).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-del" onclick="quickDel('event',${ev.id})">Del</span>
           </div>
-          <div class="show-status" style="background:var(--cream2);color:var(--text-dim)">Forgotten</div>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {}
+      }
+
+      // ── MEAL PLAN ──
+      async function loadMeals() {
+        try {
+          const meals = await fetch("/api/meals").then((r) => r.json());
+          const el = document.getElementById("meal-list");
+          if (!meals.length) {
+            el.innerHTML =
+              '<div class="empty">No meals planned. Hit "Suggest This Week" to let HorsePillow help.</div>';
+            return;
+          }
+          el.innerHTML = meals
+            .map(
+              (m) => `
+      <div class="meal-row">
+        <div class="meal-day">${esc(m.day)}</div>
+        <div class="meal-ico">🍽</div>
+        <div class="meal-name">${esc(m.name)}</div>
+        ${m.note ? `<div class="meal-tag">${esc(m.note)}</div>` : ""}
+        <div class="item-actions">
+          <span class="btn-del" onclick="quickDel('meal',${m.id})">Del</span>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {}
+      }
+
+      async function suggestMeals() {
+        const btn = document.querySelector(".meal-suggest-btn");
+        btn.textContent = "🐴 Thinking...";
+        btn.disabled = true;
+        try {
+          const r = await fetch("/api/meals/suggest", { method: "POST" });
+          const d = await r.json();
+          toast("🐴 " + d.message);
+          loadMeals();
+        } catch {
+          toast("Could not generate suggestions right now.");
+        }
+        btn.textContent = "🐴 Suggest This Week";
+        btn.disabled = false;
+      }
+
+      // ── FIRESIDE ──
+      async function loadFireside() {
+        try {
+          const items = await fetch("/api/fireside").then((r) => r.json());
+          const el = document.getElementById("fireside-list");
+          if (!items.length) {
+            el.innerHTML =
+              '<div class="empty">No topics yet. Add something to discuss with Jenn.</div>';
+            return;
+          }
+          el.innerHTML = items
+            .map(
+              (i) => `
+      <div class="fireside-row">
+        <span class="fireside-ico">🔥</span>
+        <div style="flex:1">
+          <div class="fireside-title">${esc(i.title)}</div>
+          ${i.note ? `<div class="fireside-note">${esc(i.note)}</div>` : ""}
+          ${i.scheduled_date ? `<div class="fireside-note">📅 ${fmtDate(i.scheduled_date)}</div>` : ""}
+        </div>
+        <div class="item-actions">
+          <span class="btn-edit" onclick="openEdit('fireside',${i.id},${JSON.stringify(i).replace(/'/g, "&#39;")})">Edit</span>
+          <span class="btn-del" onclick="quickDel('fireside',${i.id})">Del</span>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {}
+      }
+
+      // ── WATCH LIST ──
+      async function loadWatchList() {
+        try {
+          const shows = await fetch("/api/watchlist").then((r) => r.json());
+          const el = document.getElementById("watch-list");
+          if (!shows.length) {
+            el.innerHTML = '<div class="empty">No shows added yet.</div>';
+            return;
+          }
+          const watching = shows.filter(
+            (s) => s.status === "watching" || s.status === "up_next",
+          );
+          const forgotten = shows.filter((s) => s.status === "forgotten");
+          let html = "";
+          watching.forEach((s) => {
+            html += `<div class="show-row">
+        <div style="font-size:17px;flex-shrink:0;width:26px">📺</div>
+        <div style="flex:1"><div class="show-title">${esc(s.title)}</div><div class="show-progress">S${s.season}·E${s.episode}${s.platform ? " · " + esc(s.platform) : ""}</div></div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+          <div class="show-status" style="background:${s.status === "watching" ? "var(--green-pale)" : "var(--blue-pale)"};color:${s.status === "watching" ? "var(--green)" : "var(--blue)"}">${s.status === "watching" ? "Watching" : "Up Next"}</div>
+          <div class="item-actions">
+            <span class="btn-edit" onclick="openEdit('watchlist',${s.id},${JSON.stringify(s).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-del" onclick="quickDel('watchlist',${s.id})">Del</span>
+          </div>
+        </div>
+      </div>`;
+          });
+          if (forgotten.length) {
+            html += `<div class="show-forgotten-header">Forgotten — Still Worth It?</div>`;
+            forgotten.forEach((s) => {
+              html += `<div class="show-row">
+          <div style="font-size:17px;flex-shrink:0;width:26px">⏸</div>
+          <div style="flex:1"><div class="show-title" style="color:var(--text-sec)">${esc(s.title)}</div><div class="show-progress">Left off S${s.season}·E${s.episode}</div></div>
+          <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+            <div class="show-status" style="background:var(--cream2);color:var(--text-dim)">Forgotten</div>
+            <div class="item-actions">
+              <span class="btn-edit" onclick="openEdit('watchlist',${s.id},${JSON.stringify(s).replace(/'/g, "&#39;")})">Edit</span>
+              <span class="btn-del" onclick="quickDel('watchlist',${s.id})">Del</span>
+            </div>
+          </div>
         </div>`;
+            });
+          }
+          el.innerHTML = html;
+        } catch {}
+      }
+
+      // ── FOOD LOTTERY ──
+      async function loadFood() {
+        try {
+          const places = await fetch("/api/food").then((r) => r.json());
+          document.getElementById("food-list").innerHTML = places
+            .map((p) => `<span class="food-tag">${esc(p.name)}</span>`)
+            .join("");
+        } catch {}
+      }
+
+      async function spinFood() {
+        const btn = document.querySelector(".spin-btn");
+        btn.textContent = "🎲 Spinning...";
+        btn.disabled = true;
+        try {
+          const pick = await fetch("/api/food/spin").then((r) => r.json());
+          document.getElementById("food-name").textContent = pick.name;
+          document.getElementById("food-result").classList.add("show");
+          toast(`Tonight: ${pick.name} 🎉`);
+        } catch {}
+        setTimeout(() => {
+          btn.textContent = "🎲 Spin Again";
+          btn.disabled = false;
+        }, 800);
+      }
+
+      // ── DROP ZONE ──
+      async function submitDrop() {
+        const input = document.getElementById("drop-input");
+        const feedback = document.getElementById("drop-feedback");
+        const raw = input.value.trim();
+        if (!raw) return;
+        const btn = document.querySelector(".sb-drop-btn");
+        btn.textContent = "Dropping...";
+        btn.disabled = true;
+        feedback.textContent = "HorsePillow is thinking...";
+        try {
+          const d = await fetch("/api/drop", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ raw }),
+          }).then((r) => r.json());
+          input.value = "";
+          feedback.textContent = d.message || "Got it.";
+          setTimeout(() => {
+            feedback.textContent = "";
+          }, 4000);
+          refreshAll();
+        } catch {
+          feedback.textContent = "Something went wrong. Try again.";
+        }
+        btn.textContent = "Drop It →";
+        btn.disabled = false;
+      }
+
+      document.getElementById("drop-input").addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          submitDrop();
+        }
       });
-    }
-    el.innerHTML=html;
-  }catch(e){}
-}
 
-// ── FOOD LOTTERY ──
-async function loadFood(){
-  try{
-    const r=await fetch('/api/food');
-    const places=await r.json();
-    document.getElementById('food-list').innerHTML=places.map(p=>`<span class="food-tag">${p.name}</span>`).join('');
-  }catch(e){}
-}
+      // ── ADD FUNCTIONS ──
+      async function addEvent() {
+        const title = document.getElementById("ev-title").value.trim();
+        const date = document.getElementById("ev-date").value;
+        if (!title || !date) {
+          toast("Need at least a title and date.");
+          return;
+        }
+        await fetch("/api/events", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            date,
+            time: document.getElementById("ev-time").value || null,
+            person: document.getElementById("ev-person").value,
+            type: document.getElementById("ev-type").value,
+            note: document.getElementById("ev-note").value || null,
+            location: document.getElementById("ev-location").value || null,
+          }),
+        });
+        closeModal("eventModal");
+        document.getElementById("ev-title").value = "";
+        toast("Event added. 📅");
+        refreshAll();
+      }
 
-async function spinFood(){
-  const btn=document.querySelector('.spin-btn');
-  btn.textContent='🎲 Spinning...';
-  btn.disabled=true;
-  try{
-    const r=await fetch('/api/food/spin');
-    const pick=await r.json();
-    document.getElementById('food-name').textContent=pick.name;
-    document.getElementById('food-result').classList.add('show');
-    toast(`Tonight: ${pick.name} 🎉`);
-  }catch(e){}
-  setTimeout(()=>{btn.textContent='🎲 Spin Again';btn.disabled=false;},800);
-}
+      async function addTask() {
+        const title = document.getElementById("task-title").value.trim();
+        if (!title) {
+          toast("Need a task title.");
+          return;
+        }
+        await fetch("/api/tasks", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            person: document.getElementById("task-person").value,
+            due_date: document.getElementById("task-due").value || null,
+            note: document.getElementById("task-note").value || null,
+          }),
+        });
+        closeModal("taskModal");
+        document.getElementById("task-title").value = "";
+        toast("Task added. ✓");
+        refreshAll();
+      }
 
-// ── DROP ZONE ──
-async function submitDrop(){
-  const input=document.getElementById('drop-input');
-  const raw=input.value.trim();
-  if(!raw)return;
-  const btn=document.querySelector('.drop-btn');
-  btn.textContent='Dropping...';btn.disabled=true;
-  try{
-    const r=await fetch('/api/drop',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({raw})});
-    const d=await r.json();
-    input.value='';
-    toast("🐴 Got it. HorsePillow is on it.");
-    loadToday();loadUpcoming();loadScout();
-  }catch(e){toast("Something went wrong. Try again.")}
-  btn.textContent='Drop It';btn.disabled=false;
-}
+      async function addFireside() {
+        const title = document.getElementById("fs-title").value.trim();
+        if (!title) {
+          toast("Need a topic.");
+          return;
+        }
+        await fetch("/api/fireside", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            note: document.getElementById("fs-note").value || null,
+            scheduled_date: document.getElementById("fs-date").value || null,
+          }),
+        });
+        closeModal("firesideModal");
+        document.getElementById("fs-title").value = "";
+        toast("Added to Fireside. 🔥");
+        loadFireside();
+      }
 
-document.getElementById('drop-input').addEventListener('keydown',e=>{
-  if(e.key==='Enter')submitDrop();
-});
+      async function addShow() {
+        const title = document.getElementById("watch-title").value.trim();
+        if (!title) {
+          toast("Need a show title.");
+          return;
+        }
+        await fetch("/api/watchlist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            platform: document.getElementById("watch-platform").value || null,
+            season:
+              parseInt(document.getElementById("watch-season").value) || 1,
+            episode:
+              parseInt(document.getElementById("watch-episode").value) || 1,
+            status: document.getElementById("watch-status").value,
+          }),
+        });
+        closeModal("watchModal");
+        document.getElementById("watch-title").value = "";
+        toast("Show added. 📺");
+        loadWatchList();
+      }
 
-// ── ADD EVENT ──
-async function addEvent(){
-  const title=document.getElementById('ev-title').value.trim();
-  const date=document.getElementById('ev-date').value;
-  if(!title||!date){toast("Need at least a title and date.");return;}
-  await fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-    title,date,
-    time:document.getElementById('ev-time').value||null,
-    person:document.getElementById('ev-person').value,
-    type:document.getElementById('ev-type').value,
-    note:document.getElementById('ev-note').value||null
-  })});
-  closeModal('eventModal');
-  document.getElementById('ev-title').value='';
-  toast("Event added. 📅");
-  loadToday();loadUpcoming();loadScout();
-}
+      async function addPin() {
+        const text = document.getElementById("pin-text").value.trim();
+        if (!text) {
+          toast("Need some text.");
+          return;
+        }
+        await fetch("/api/pins", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text,
+            from_person: document.getElementById("pin-from").value,
+            to_person: document.getElementById("pin-to").value,
+          }),
+        });
+        closeModal("pinModal");
+        document.getElementById("pin-text").value = "";
+        toast("Pinned. 📌");
+        loadPinned();
+      }
 
-// ── ADD TASK ──
-async function addTask(){
-  const title=document.getElementById('task-title').value.trim();
-  if(!title){toast("Need a task title.");return;}
-  await fetch('/api/tasks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-    title,
-    person:document.getElementById('task-person').value,
-    due_date:document.getElementById('task-due').value||null,
-    note:document.getElementById('task-note').value||null
-  })});
-  closeModal('taskModal');
-  document.getElementById('task-title').value='';
-  toast("Task added. ✓");
-  loadScout();
-}
+      async function addMeal() {
+        const name = document.getElementById("meal-name").value.trim();
+        if (!name) {
+          toast("Need a meal.");
+          return;
+        }
+        await fetch("/api/meals", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            day: document.getElementById("meal-day").value,
+            name,
+            note: document.getElementById("meal-note").value || null,
+          }),
+        });
+        closeModal("mealModal");
+        document.getElementById("meal-name").value = "";
+        toast("Meal added. 🍽");
+        loadMeals();
+      }
 
-// ── ADD FIRESIDE ──
-async function addFireside(){
-  const title=document.getElementById('fs-title').value.trim();
-  if(!title){toast("Need a topic.");return;}
-  await fetch('/api/fireside',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-    title,
-    note:document.getElementById('fs-note').value||null,
-    scheduled_date:document.getElementById('fs-date').value||null
-  })});
-  closeModal('firesideModal');
-  document.getElementById('fs-title').value='';
-  toast("Added to Fireside. 🔥");
-  loadFireside();
-}
+      // ── EDIT/DELETE ──
+      let editState = { type: null, id: null, data: null };
 
-// ── ADD SHOW ──
-async function addShow(){
-  const title=document.getElementById('watch-title').value.trim();
-  if(!title){toast("Need a show title.");return;}
-  await fetch('/api/watchlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-    title,
-    platform:document.getElementById('watch-platform').value||null,
-    season:parseInt(document.getElementById('watch-season').value)||1,
-    episode:parseInt(document.getElementById('watch-episode').value)||1,
-    status:document.getElementById('watch-status').value
-  })});
-  closeModal('watchModal');
-  document.getElementById('watch-title').value='';
-  toast("Show added. 📺");
-  loadWatchList();
-}
+      function openEdit(type, id, data) {
+        editState = { type, id, data };
+        const titles = {
+          event: "Edit Event",
+          task: "Edit Task",
+          dispatch: "Edit Dispatch",
+          fireside: "Edit Fireside Topic",
+          watchlist: "Edit Show",
+        };
+        document.getElementById("edit-modal-title").textContent =
+          titles[type] || "Edit";
+        let fields = "";
+        if (type === "event") {
+          fields = `
+      <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="edit-title" value="${esc(data.title)}"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="edit-date" type="date" value="${data.date || ""}"/></div>
+        <div class="form-group"><label class="form-label">Time</label><input class="form-input" id="edit-time" type="time" value="${data.time || ""}"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="edit-location" value="${esc(data.location || "")}" placeholder="Riverview Park..."/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Who</label><select class="form-input" id="edit-person">${["family", "jeff", "jenn", "jj"].map((p) => `<option value="${p}" ${data.person === p ? "selected" : ""}>${p.charAt(0).toUpperCase() + p.slice(1)}</option>`).join("")}</select></div>
+        <div class="form-group"><label class="form-label">Type</label><select class="form-input" id="edit-type">${["event", "activity", "appointment", "work", "fun"].map((t) => `<option value="${t}" ${data.type === t ? "selected" : ""}>${t.charAt(0).toUpperCase() + t.slice(1)}</option>`).join("")}</select></div>
+      </div>
+      <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="edit-note" value="${esc(data.note || "")}"/></div>`;
+        } else if (type === "task") {
+          fields = `
+      <div class="form-group"><label class="form-label">Task</label><input class="form-input" id="edit-title" value="${esc(data.title)}"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Who</label><select class="form-input" id="edit-person">${["jeff", "jenn"].map((p) => `<option value="${p}" ${data.person === p ? "selected" : ""}>${p.charAt(0).toUpperCase() + p.slice(1)}</option>`).join("")}</select></div>
+        <div class="form-group"><label class="form-label">Due Date</label><input class="form-input" id="edit-due" type="date" value="${data.due_date || ""}"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="edit-note" value="${esc(data.note || "")}"/></div>`;
+        } else if (type === "dispatch") {
+          fields = `
+      <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="edit-title" value="${esc(data.title)}"/></div>
+      <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="edit-note" value="${esc(data.note || "")}"/></div>`;
+        } else if (type === "fireside") {
+          fields = `
+      <div class="form-group"><label class="form-label">Topic</label><input class="form-input" id="edit-title" value="${esc(data.title)}"/></div>
+      <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="edit-note" value="${esc(data.note || "")}"/></div>
+      <div class="form-group"><label class="form-label">Scheduled For</label><input class="form-input" id="edit-date" type="date" value="${data.scheduled_date || ""}"/></div>`;
+        } else if (type === "watchlist") {
+          fields = `
+      <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="edit-title" value="${esc(data.title)}"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Platform</label><input class="form-input" id="edit-platform" value="${esc(data.platform || "")}"/></div>
+        <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="edit-status">${["watching", "up_next", "forgotten"].map((s) => `<option value="${s}" ${data.status === s ? "selected" : ""}>${s === "up_next" ? "Up Next" : s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join("")}</select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Season</label><input class="form-input" id="edit-season" type="number" value="${data.season || 1}" min="1"/></div>
+        <div class="form-group"><label class="form-label">Episode</label><input class="form-input" id="edit-episode" type="number" value="${data.episode || 1}" min="1"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="edit-note" value="${esc(data.note || "")}"/></div>`;
+        }
+        document.getElementById("edit-modal-fields").innerHTML = fields;
+        openModal("editModal");
+      }
 
-// ── TOP PILLS ──
-async function loadPills(){
-  try{
-    const[today,dispatches]=await Promise.all([fetch('/api/today').then(r=>r.json()),fetch('/api/dispatches').then(r=>r.json())]);
-    const pills=document.getElementById('top-pills');
-    let html='';
-    if(today.length>0) html+=`<span class="pill" style="background:var(--amber-pale);border:1px solid var(--amber-border);color:var(--amber)">${today.length} thing${today.length>1?'s':''} today</span>`;
-    if(dispatches.length>0) html+=`<span class="pill" style="background:var(--terra-pale);border:1px solid rgba(184,90,58,0.22);color:var(--terracotta)">${dispatches.length} from Jenn</span>`;
-    if(today.length===0&&dispatches.length===0) html+=`<span class="pill" style="background:var(--green-pale);border:1px solid rgba(74,122,74,0.22);color:var(--green)">All clear today</span>`;
-    pills.innerHTML=html;
-  }catch(e){}
-}
+      async function saveEdit() {
+        const { type, id } = editState;
+        const v = (id) => document.getElementById(id)?.value;
+        let body = {};
+        if (type === "event")
+          body = {
+            title: v("edit-title"),
+            date: v("edit-date"),
+            time: v("edit-time") || null,
+            person: v("edit-person"),
+            type: v("edit-type"),
+            note: v("edit-note") || null,
+            location: v("edit-location") || null,
+          };
+        else if (type === "task")
+          body = {
+            title: v("edit-title"),
+            person: v("edit-person"),
+            due_date: v("edit-due") || null,
+            note: v("edit-note") || null,
+          };
+        else if (type === "dispatch")
+          body = {
+            title: v("edit-title"),
+            note: v("edit-note") || null,
+            type: editState.data.type,
+          };
+        else if (type === "fireside")
+          body = {
+            title: v("edit-title"),
+            note: v("edit-note") || null,
+            scheduled_date: v("edit-date") || null,
+          };
+        else if (type === "watchlist")
+          body = {
+            title: v("edit-title"),
+            platform: v("edit-platform") || null,
+            status: v("edit-status"),
+            season: parseInt(v("edit-season")) || 1,
+            episode: parseInt(v("edit-episode")) || 1,
+            note: v("edit-note") || null,
+          };
+        const ep = {
+          event: "events",
+          task: "tasks",
+          dispatch: "dispatches",
+          fireside: "fireside",
+          watchlist: "watchlist",
+        }[type];
+        await fetch(`/api/${ep}/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        closeModal("editModal");
+        toast("Updated. 🐴");
+        refreshAll();
+      }
 
-// ── INIT ──
-async function init(){
-  await Promise.all([
-    loadScout(),loadToday(),loadDispatches(),
-    loadUpcoming(),loadFireside(),loadWatchList(),
-    loadFood(),loadPills()
-  ]);
-}
-init();
-</script>
-</body>
+      function quickDel(type, id) {
+        editState = { type, id, data: {} };
+        confirmDelete();
+      }
+      function confirmDelete() {
+        closeModal("editModal");
+        openModal("confirmModal");
+      }
+      async function executeDelete() {
+        const { type, id } = editState;
+        const ep = {
+          event: "events",
+          task: "tasks",
+          dispatch: "dispatches",
+          fireside: "fireside",
+          watchlist: "watchlist",
+          pin: "pins",
+          meal: "meals",
+        }[type];
+        await fetch(`/api/${ep}/${id}`, { method: "DELETE" });
+        closeModal("confirmModal");
+        toast("Deleted. 🐴");
+        refreshAll();
+      }
+
+      // ── TOP PILLS ──
+      async function loadPills() {
+        try {
+          const [today, dispatches] = await Promise.all([
+            fetch("/api/today").then((r) => r.json()),
+            fetch("/api/dispatches").then((r) => r.json()),
+          ]);
+          const pills = document.getElementById("top-pills");
+          let html = "";
+          if (today.length > 0)
+            html += `<span class="pill" style="background:var(--amber-pale);border:1px solid var(--amber-border);color:var(--amber)">${today.length} thing${today.length > 1 ? "s" : ""} today</span>`;
+          if (dispatches.length > 0)
+            html += `<span class="pill" style="background:var(--terra-pale);border:1px solid rgba(184,90,58,0.22);color:var(--terracotta)">${dispatches.length} from Jenn</span>`;
+          if (!today.length && !dispatches.length)
+            html += `<span class="pill" style="background:var(--green-pale);border:1px solid rgba(74,122,74,0.22);color:var(--green)">All clear today</span>`;
+          pills.innerHTML = html;
+        } catch {}
+      }
+
+      async function refreshAll() {
+        await Promise.all([
+          loadScout(),
+          loadToday(),
+          loadDispatches(),
+          loadWhatsNext(),
+          loadUpcoming(),
+          loadPinned(),
+          loadFireside(),
+          loadWatchList(),
+          loadMeals(),
+          loadPills(),
+        ]);
+      }
+
+      // ── INIT ──
+      async function init() {
+        await Promise.all([
+          loadScout(),
+          loadToday(),
+          loadDispatches(),
+          loadWhatsNext(),
+          loadUpcoming(),
+          loadPinned(),
+          loadFireside(),
+          loadWatchList(),
+          loadFood(),
+          loadMeals(),
+          loadPills(),
+        ]);
+      }
+      init();
+    </script>
+  </body>
 </html>

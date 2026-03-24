@@ -12,6 +12,7 @@ db.exec(`
     person TEXT DEFAULT 'family',
     type TEXT DEFAULT 'event',
     note TEXT,
+    location TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -64,6 +65,23 @@ db.exec(`
     note TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS pins (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    text TEXT NOT NULL,
+    from_person TEXT DEFAULT 'jeff',
+    to_person TEXT DEFAULT 'jeff',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS meals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    day TEXT NOT NULL,
+    name TEXT NOT NULL,
+    note TEXT,
+    week TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
   CREATE TABLE IF NOT EXISTS food_places (
