@@ -188,75 +188,79 @@
         letter-spacing: 0.06em;
       }
 
-      /* DROP ZONE IN SIDEBAR */
-      .sb-drop {
-        padding: 12px 12px 0;
-        border-top: 1px solid var(--border);
-        margin-top: 8px;
+      /* DROP ZONE — TOP BAR */
+      .drop-top {
+        background: var(--warm-white);
+        border-bottom: 2px solid var(--border-warm);
+        padding: 12px 28px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 2px 12px rgba(42, 34, 24, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 50;
       }
-      .sb-drop-lbl {
+      .drop-top-label {
         font-family: var(--font-ui);
-        font-size: 9px;
-        font-weight: 700;
+        font-size: 11px;
+        font-weight: 800;
         letter-spacing: 0.18em;
         color: var(--amber);
         text-transform: uppercase;
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
-      .sb-drop-input {
-        width: 100%;
-        padding: 9px 12px;
+      .drop-top-input {
+        flex: 1;
+        padding: 10px 16px;
         font-family: "Barlow", sans-serif;
-        font-size: 13px;
+        font-size: 15px;
         color: var(--text);
         background: var(--cream);
         border: 1.5px solid var(--border-warm);
-        border-radius: 7px;
+        border-radius: 8px;
         outline: none;
         transition: all 0.2s;
-        resize: none;
-        min-height: 60px;
-        max-height: 100px;
       }
-      .sb-drop-input::placeholder {
+      .drop-top-input::placeholder {
         color: var(--text-dim);
       }
-      .sb-drop-input:focus {
+      .drop-top-input:focus {
         border-color: var(--amber);
         background: var(--warm-white);
         box-shadow: 0 0 0 3px var(--amber-pale);
       }
-      .sb-drop-btn {
-        width: 100%;
-        margin-top: 6px;
-        padding: 9px;
+      .drop-top-btn {
+        padding: 10px 22px;
         font-family: var(--font-ui);
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 800;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         background: var(--amber);
         color: #fff;
         border: none;
-        border-radius: 7px;
+        border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s;
-        box-shadow: 0 2px 8px rgba(200, 114, 10, 0.25);
+        white-space: nowrap;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(200, 114, 10, 0.3);
       }
-      .sb-drop-btn:hover {
+      .drop-top-btn:hover {
         background: var(--amber-light);
+        transform: translateY(-1px);
       }
-      .sb-drop-feedback {
+      .drop-top-feedback {
         font-family: var(--font-ui);
         font-size: 10px;
         color: var(--text-sec);
-        margin-top: 5px;
-        min-height: 14px;
-        letter-spacing: 0.04em;
+        white-space: nowrap;
+        flex-shrink: 0;
         font-style: italic;
+        letter-spacing: 0.04em;
+        min-width: 120px;
       }
 
       .sb-divider {
@@ -323,7 +327,7 @@
       /* ── MAIN ── */
       .main {
         flex: 1;
-        padding: 26px 26px 40px;
+        padding: 0 26px 40px;
         max-width: 1100px;
       }
 
@@ -1472,18 +1476,6 @@
           >
         </nav>
 
-        <!-- DROP ZONE IN SIDEBAR -->
-        <div class="sb-drop">
-          <div class="sb-drop-lbl">🐴 Drop It</div>
-          <textarea
-            class="sb-drop-input"
-            id="drop-input"
-            placeholder="Tell HorsePillow anything...&#10;JJ has soccer Thu 4pm&#10;Pick up milk&#10;Watch Severance tonight"
-          ></textarea>
-          <button class="sb-drop-btn" onclick="submitDrop()">Drop It →</button>
-          <div class="sb-drop-feedback" id="drop-feedback"></div>
-        </div>
-
         <div class="sb-divider"></div>
 
         <div class="sb-crew">
@@ -1520,6 +1512,18 @@
 
       <!-- MAIN -->
       <main class="main">
+        <!-- DROP ZONE TOP BAR -->
+        <div class="drop-top">
+          <span class="drop-top-label">🐴 Drop It</span>
+          <input
+            class="drop-top-input"
+            id="drop-input"
+            placeholder="Tell HorsePillow anything... JJ has soccer Thu 4pm · Pick up milk · Watch Severance tonight · Plan next adventure"
+          />
+          <button class="drop-top-btn" onclick="submitDrop()">Drop It</button>
+          <div class="drop-top-feedback" id="drop-feedback"></div>
+        </div>
+
         <div class="top-bar">
           <div>
             <div class="tb-eyebrow">
@@ -2274,6 +2278,7 @@
               '<div class="empty">Nothing on the board today. Enjoy the breathing room.</div>';
             return;
           }
+          events.forEach((ev) => storeItem("event", ev.id, ev));
           el.innerHTML = events
             .map(
               (ev) => `
@@ -2288,7 +2293,7 @@
         <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
           ${ev.time ? `<div class="ec-time" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${fmt12(ev.time)}</div>` : ""}
           <div class="item-actions">
-            <span class="btn-edit" onclick="openEdit('event',${ev.id},${JSON.stringify(ev).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-edit" onclick="openEdit('event',${ev.id})">Edit</span>
             <span class="btn-del" onclick="quickDel('event',${ev.id})">Del</span>
           </div>
         </div>
@@ -2316,6 +2321,7 @@
               '<div class="empty">Nothing from Jenn right now.</div>';
             return;
           }
+          dispatches.forEach((d) => storeItem("dispatch", d.id, d));
           el.innerHTML = dispatches
             .map(
               (d) => `
@@ -2329,7 +2335,7 @@
         <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
           <div class="dispatch-type" style="background:${d.type === "note" ? "var(--terra-pale)" : "var(--amber-pale)"};color:${d.type === "note" ? "var(--terracotta)" : "var(--amber)"}">${d.type}</div>
           <div class="item-actions">
-            <span class="btn-edit" onclick="openEdit('dispatch',${d.id},${JSON.stringify(d).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-edit" onclick="openEdit('dispatch',${d.id})">Edit</span>
             <span class="btn-del" onclick="quickDel('dispatch',${d.id})">Del</span>
           </div>
         </div>
@@ -2417,6 +2423,7 @@
               '<div class="empty">Nothing on the horizon yet.</div>';
             return;
           }
+          events.forEach((ev) => storeItem("event", ev.id, ev));
           el.innerHTML = events
             .map(
               (ev) => `
@@ -2430,7 +2437,7 @@
         <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
           <div class="upcoming-who" style="background:${personBg(ev.person)};color:${personColor(ev.person)}">${ev.person}</div>
           <div class="item-actions">
-            <span class="btn-edit" onclick="openEdit('event',${ev.id},${JSON.stringify(ev).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-edit" onclick="openEdit('event',${ev.id})">Edit</span>
             <span class="btn-del" onclick="quickDel('event',${ev.id})">Del</span>
           </div>
         </div>
@@ -2493,6 +2500,7 @@
               '<div class="empty">No topics yet. Add something to discuss with Jenn.</div>';
             return;
           }
+          items.forEach((i) => storeItem("fireside", i.id, i));
           el.innerHTML = items
             .map(
               (i) => `
@@ -2504,7 +2512,7 @@
           ${i.scheduled_date ? `<div class="fireside-note">📅 ${fmtDate(i.scheduled_date)}</div>` : ""}
         </div>
         <div class="item-actions">
-          <span class="btn-edit" onclick="openEdit('fireside',${i.id},${JSON.stringify(i).replace(/'/g, "&#39;")})">Edit</span>
+          <span class="btn-edit" onclick="openEdit('fireside',${i.id})">Edit</span>
           <span class="btn-del" onclick="quickDel('fireside',${i.id})">Del</span>
         </div>
       </div>`,
@@ -2522,6 +2530,7 @@
             el.innerHTML = '<div class="empty">No shows added yet.</div>';
             return;
           }
+          shows.forEach((s) => storeItem("watchlist", s.id, s));
           const watching = shows.filter(
             (s) => s.status === "watching" || s.status === "up_next",
           );
@@ -2534,7 +2543,7 @@
         <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
           <div class="show-status" style="background:${s.status === "watching" ? "var(--green-pale)" : "var(--blue-pale)"};color:${s.status === "watching" ? "var(--green)" : "var(--blue)"}">${s.status === "watching" ? "Watching" : "Up Next"}</div>
           <div class="item-actions">
-            <span class="btn-edit" onclick="openEdit('watchlist',${s.id},${JSON.stringify(s).replace(/'/g, "&#39;")})">Edit</span>
+            <span class="btn-edit" onclick="openEdit('watchlist',${s.id})">Edit</span>
             <span class="btn-del" onclick="quickDel('watchlist',${s.id})">Del</span>
           </div>
         </div>
@@ -2549,7 +2558,7 @@
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
             <div class="show-status" style="background:var(--cream2);color:var(--text-dim)">Forgotten</div>
             <div class="item-actions">
-              <span class="btn-edit" onclick="openEdit('watchlist',${s.id},${JSON.stringify(s).replace(/'/g, "&#39;")})">Edit</span>
+              <span class="btn-edit" onclick="openEdit('watchlist',${s.id})">Edit</span>
               <span class="btn-del" onclick="quickDel('watchlist',${s.id})">Del</span>
             </div>
           </div>
@@ -2592,7 +2601,7 @@
         const feedback = document.getElementById("drop-feedback");
         const raw = input.value.trim();
         if (!raw) return;
-        const btn = document.querySelector(".sb-drop-btn");
+        const btn = document.querySelector(".drop-top-btn");
         btn.textContent = "Dropping...";
         btn.disabled = true;
         feedback.textContent = "HorsePillow is thinking...";
@@ -2600,7 +2609,10 @@
           const d = await fetch("/api/drop", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ raw }),
+            body: JSON.stringify({
+              raw,
+              localDate: new Date().toLocaleDateString("en-CA"),
+            }),
           }).then((r) => r.json());
           input.value = "";
           feedback.textContent = d.message || "Got it.";
@@ -2760,9 +2772,19 @@
       }
 
       // ── EDIT/DELETE ──
+      // ── EDIT/DELETE DATA STORE ──
+      const itemStore = {};
+      function storeItem(type, id, data) {
+        itemStore[`${type}_${id}`] = data;
+      }
+      function getItem(type, id) {
+        return itemStore[`${type}_${id}`] || {};
+      }
+
       let editState = { type: null, id: null, data: null };
 
-      function openEdit(type, id, data) {
+      function openEdit(type, id) {
+        const data = getItem(type, id);
         editState = { type, id, data };
         const titles = {
           event: "Edit Event",
