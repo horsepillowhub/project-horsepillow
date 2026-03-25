@@ -9,6 +9,7 @@ db.exec(`
     title TEXT NOT NULL,
     date TEXT NOT NULL,
     time TEXT,
+    end_time TEXT,
     person TEXT DEFAULT 'family',
     type TEXT DEFAULT 'event',
     note TEXT,
